@@ -1,6 +1,6 @@
 {
-  "name": "nextjs-wasm",
-  "version": "1.2.1",
+  "name": "displacement",
+  "version": "0.1.0",
   "scripts": {
     "dev": "next dev",
     "build:wasm": "cd wasm && ./rs-build.sh",
