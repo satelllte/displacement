@@ -30,7 +30,7 @@ jobs:
           target/
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
     - uses: actions/checkout@v3
-    - name: Lint
-      run: ./rs-lint.sh
     - name: Test
       run: ./rs-test.sh
+    - name: Lint
+      run: ./rs-lint.sh
