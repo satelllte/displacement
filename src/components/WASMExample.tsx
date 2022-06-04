@@ -8,5 +8,5 @@ export const WASMExample = () => {
     return <>...</>
   }
 
-  return <>Computed from WASM: 4+3={ctx.wasm.add(4,3)}</>
+  return <p className='text-center text-md sm:text-lg lg:text-xl'>Computed from WASM: 4+3={ctx.wasm.add(4,3)}</p>
 }
