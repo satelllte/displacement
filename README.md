@@ -1,4 +1,4 @@
-# Next.js with WebAssembly
+# DISPLACEMENT
 
 [Next.js](https://nextjs.org/)-based web application template with [WebAssembly](https://webassembly.org/) module written in [Rust](https://www.rust-lang.org/) programming language.
 
