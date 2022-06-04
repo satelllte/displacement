@@ -15,7 +15,7 @@ env:
   RUST_TEST_THREADS: 32
 
 jobs:
-  build:
+  checks:
 
     runs-on: ubuntu-latest
 
