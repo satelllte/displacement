@@ -1,0 +1,36 @@
+name: WASM
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+defaults:
+  run:
+    working-directory: wasm
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_TEST_THREADS: 32
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          target/
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+    - uses: actions/checkout@v3
+    - name: Lint
+      run: ./rs-lint.sh
+    - name: Test
+      run: ./rs-test.sh
