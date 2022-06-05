@@ -84,6 +84,7 @@ jobs:
         path: ./netlify/out
     - name: Show "out" directory contents
       run: find ./out | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
+    - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
