@@ -1,0 +1,6 @@
+{
+  "name": "netlify",
+  "devDependencies": {
+    "netlify-cli": "10.4.0"
+  }
+}

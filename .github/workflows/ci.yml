@@ -71,6 +71,9 @@ jobs:
     name: Deploy
     needs: [webassembly, web]  
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: netlify
     env:
       NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
@@ -81,13 +84,15 @@ jobs:
         path: ./out
     - name: Show "out" directory contents
       run: find ./out | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+        cache: 'npm'
+    - name: Install dependencies for Netlify CLI
+      run: npm ci
     - name: Deploy (Development)
       if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}
-      uses: netlify/actions/cli@master
-      with:
-        args: deploy --dir=out
+      run: npx netlify deploy --dir=out
     - name: Deploy (Production)
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-      uses: netlify/actions/cli@master
-      with:
-        args: deploy --dir=out --prod
+      run: npx netlify deploy --dir=out --prod
