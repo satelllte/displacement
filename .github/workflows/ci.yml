@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  webassembly:
+    runs-on: ubuntu-latest
+    env:
+      CARGO_TERM_COLOR: always
+      RUST_TEST_THREADS: 32
+    defaults:
+      run:
+        working-directory: wasm
+    steps:
+    - uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          target/
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+    - uses: actions/checkout@v3
+    - name: Tests
+      run: ./rs-test.sh
+    - name: Code linting
+      run: ./rs-lint.sh
+
+  web:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [18.x]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build:wasm
+    - run: npm run test:typescript
+    - run: npm run test:lint
+    - run: npm run build:web
