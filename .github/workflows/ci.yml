@@ -56,8 +56,7 @@ jobs:
         name: output
         path: ./out
 
-  # will be the final step for deployment (runs only after all of the previous steps were successful)
-  success:
+  deploy:
     needs: [webassembly, web]  
     runs-on: ubuntu-latest
     steps:
@@ -67,3 +66,9 @@ jobs:
         path: ./out
     - name: Show "out" directory contents
       run: find ./out | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
+    - name: Deploy
+      uses: netlify/actions/build@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        NETLIFY_DIR: ./out
