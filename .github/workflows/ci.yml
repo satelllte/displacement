@@ -38,11 +38,21 @@ jobs:
     name: Web
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          ./wasm/target/
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
         cache: 'npm'
+        cache-dependency-path: ./package-lock.json
     - name: Install dependencies
       run: npm ci
     - name: Build WebAssembly
@@ -62,23 +72,30 @@ jobs:
     name: Deploy
     needs: [webassembly, web]  
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: netlify
     env:
       NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
     steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+        cache: 'npm'
+        cache-dependency-path: ./netlify/package-lock.json
     - uses: actions/download-artifact@v3
       with:
         name: output
-        path: ./out
+        path: ./netlify/out
     - name: Show "out" directory contents
       run: find ./out | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
+    - name: Install dependencies for Netlify CLI
+      run: npm ci
     - name: Deploy (Development)
       if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}
-      uses: netlify/actions/cli@master
-      with:
-        args: deploy --dir=out
+      run: npx netlify deploy --dir=out
     - name: Deploy (Production)
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-      uses: netlify/actions/cli@master
-      with:
-        args: deploy --dir=out --prod
+      run: npx netlify deploy --dir=out --prod
