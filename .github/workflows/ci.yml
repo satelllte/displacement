@@ -78,17 +78,17 @@ jobs:
       NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
     steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+        cache: 'npm'
     - uses: actions/download-artifact@v3
       with:
         name: output
         path: ./netlify/out
     - name: Show "out" directory contents
       run: find ./out | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 16.x
-        cache: 'npm'
     - name: Install dependencies for Netlify CLI
       run: npm ci
     - name: Deploy (Development)
