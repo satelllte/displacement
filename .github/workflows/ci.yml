@@ -8,6 +8,7 @@ on:
 
 jobs:
   webassembly:
+    name: WebAssembly
     runs-on: ubuntu-latest
     env:
       CARGO_TERM_COLOR: always
@@ -34,6 +35,7 @@ jobs:
       run: ./rs-fmt.sh
 
   web:
+    name: Web
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -56,10 +58,13 @@ jobs:
         name: output
         path: ./out
 
-  # will be the final step for deployment (runs only after all of the previous steps were successful)
-  success:
+  deploy:
+    name: Deploy
     needs: [webassembly, web]  
     runs-on: ubuntu-latest
+    env:
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
     steps:
     - uses: actions/download-artifact@v3
       with:
@@ -67,3 +72,13 @@ jobs:
         path: ./out
     - name: Show "out" directory contents
       run: find ./out | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
+    - name: Deploy (Development)
+      if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}
+      uses: netlify/actions/cli@master
+      with:
+        args: deploy --dir=out
+    - name: Deploy (Production)
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      uses: netlify/actions/cli@master
+      with:
+        args: deploy --dir=out --prod
