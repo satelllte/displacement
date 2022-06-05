@@ -67,8 +67,10 @@ jobs:
     - name: Show "out" directory contents
       run: find ./out | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
     - name: Deploy
-      uses: netlify/actions/build@master
+      uses: netlify/actions/cli@master
+      with:
+        args: deploy --dir=out --prod
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        NETLIFY_DIR: ./out
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
