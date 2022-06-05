@@ -28,23 +28,26 @@ jobs:
     - uses: actions/checkout@v3
     - name: Tests
       run: ./rs-test.sh
-    - name: Code linting
-      run: ./rs-lint.sh
+    - name: Code quality
+      run: ./rs-clippy.sh
+    - name: Code formatting
+      run: ./rs-fmt.sh
 
   web:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        version: [18.x]
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+    - uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 16.x
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build:wasm
-    - run: npm run test:typescript
-    - run: npm run test:lint
-    - run: npm run build:web
+    - name: Install dependencies
+      run: npm ci
+    - name: Build WebAssembly
+      run: npm run build:wasm
+    - name: Validate types
+      run: npm run test:typescript
+    - name: Code linting
+      run: npm run test:lint
+    - name: Build web application
+      run: npm run build:web
