@@ -52,6 +52,7 @@ jobs:
       with:
         node-version: 16.x
         cache: 'npm'
+        cache-dependency-path: ./package-lock.json
     - name: Install dependencies
       run: npm ci
     - name: Build WebAssembly
@@ -83,6 +84,7 @@ jobs:
       with:
         node-version: 16.x
         cache: 'npm'
+        cache-dependency-path: ./netlify/package-lock.json
     - uses: actions/download-artifact@v3
       with:
         name: output
