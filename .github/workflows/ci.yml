@@ -51,3 +51,10 @@ jobs:
       run: npm run test:lint
     - name: Build web application
       run: npm run build:web
+
+  # will be the final step for deployment (runs only after all of the previous steps were successful)
+  success:
+    needs: [webassembly, web]  
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo "Success"
