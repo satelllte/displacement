@@ -81,7 +81,7 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: output
-        path: ./out
+        path: ./netlify/out
     - name: Show "out" directory contents
       run: find ./out | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
     - uses: actions/setup-node@v3
