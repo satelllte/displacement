@@ -6,7 +6,7 @@ Displacement maps generator.
 
 ### [Gitpod](https://www.gitpod.io/)
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/satelllte/displacement)
+[![Open in Gitpod](https://img.shields.io/badge/Open%20In-Gitpod.io-%231966D2?style=for-the-badge&logo=gitpod)](https://gitpod.io/#https://github.com/satelllte/displacement)
 
 ### [GitHub Codespaces](https://github.com/features/codespaces)
 
