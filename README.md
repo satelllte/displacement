@@ -49,6 +49,12 @@ npm run build:web
 Output files will be available in `out` directory.
 The directory contents can be served on some static website hosting service like [Netlify](https://www.netlify.com/), [Vercel](https://vercel.com/), etc.
 
+Also, the production build can be previewed locally using `serve` script:
+
+```bash
+npm run serve
+```
+
 ## Testing
 
 ### WebAssembly
