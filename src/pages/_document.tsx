@@ -1,8 +1,7 @@
 import { Html, Head, Main, NextScript } from 'next/document'
 import { APP_DESCRIPTION, APP_NAME } from '../constants'
-// import type { DocumentProps } from 'next/document'
 
-const Document = (/* props: DocumentProps */) => {
+const Document = () => {
   return (
     <Html lang='en'>
       <Head>
@@ -18,7 +17,7 @@ const Document = (/* props: DocumentProps */) => {
         <link rel="icon" href="/favicon.ico" />
         <link rel='manifest' href='/manifest.json' crossOrigin='use-credentials' />
       </Head>
-      <body>
+      <body className='bg-black text-white'>
         <Main />
         <NextScript />
       </body>
