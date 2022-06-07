@@ -6,7 +6,7 @@ Displacement maps generator.
 
 ### [Gitpod](https://www.gitpod.io/)
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/satelllte/displacement)
+[![Open in Gitpod](https://img.shields.io/badge/Open%20In-Gitpod.io-%231966D2?style=for-the-badge&logo=gitpod)](https://gitpod.io/#https://github.com/satelllte/displacement)
 
 ### [GitHub Codespaces](https://github.com/features/codespaces)
 
@@ -48,6 +48,12 @@ npm run build:web
 
 Output files will be available in `out` directory.
 The directory contents can be served on some static website hosting service like [Netlify](https://www.netlify.com/), [Vercel](https://vercel.com/), etc.
+
+Also, the production build can be previewed locally using `serve` script:
+
+```bash
+npm run serve
+```
 
 ## Testing
 
