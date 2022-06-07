@@ -17,6 +17,7 @@
 /public/sw.js.map
 /public/workbox-*.js
 /public/workbox-*.js.map
+/public/fallback-*.js
 
 # misc
 .DS_Store
