@@ -18,16 +18,14 @@ export const Canvas: React.FC<CanvasProps> = ({
     console.info('imageData: ', imageData);
 
     // first render demo
-    setTimeout(() => {
-      const sum = wasm.add(12, 13)
-      console.info('sum: ', sum)
-      wasm.fill(ctx2d, canvas.width, canvas.height)
-      console.info('filled')
-    }, 1000)
+    const sum = wasm.add(12, 13)
+    console.info('sum: ', sum)
+    wasm.fill(ctx2d, canvas.width, canvas.height)
+    console.info('filled')
   }, [size])
 
   return (
-    <canvas ref={canvasRef} className='max-h-full max-w-full box-border border-2 border-dashed border-cyan-900' />
+    <canvas ref={canvasRef} className='absolute max-h-full max-w-full bg-neutral-900' />
   )
 }
 
