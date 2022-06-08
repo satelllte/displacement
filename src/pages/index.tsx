@@ -9,10 +9,10 @@ const Home: NextPage = () => {
     <div className='absolute inset-0 overflow-hidden flex flex-col'>
       <header className='p-4 bg-red-900'>Header</header>
       <main className='relative flex-1 flex justify-between flex-col md:flex-row'>
-        <section className='relative m-4 flex-1 box-border bg-stone-900 border-dashed border-2 border-cyan-900 drop-shadow-xl'>
+        <section id="canvas-section" className='m-4 flex-1 flex justify-center items-center'>
           <Canvas/>
         </section>
-        <section className={`p-4 fixed inset-x-0 h-2/3 bg-blue-900 transition-transform ease-out duration-150 ${settingsOpened ? '-translate-y-full md:translate-y-0 drop-shadow-xl md:drop-shadow-none' : ''} transform-gpu top-full md:h-auto md:static md:flex-1`}>
+        <section id="settings-section" className={`p-4 fixed inset-x-0 h-2/3 bg-blue-900 transition-transform ease-out duration-150 ${settingsOpened ? '-translate-y-full md:translate-y-0 drop-shadow-xl md:drop-shadow-none' : ''} transform-gpu top-full md:h-auto md:static md:flex-1`}>
           Settings
           <button className={`md:hidden`} onClick={() => setSettingsOpened(false)}>Close settings</button>
         </section>
