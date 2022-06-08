@@ -1,1 +1,1 @@
-declare type WASM = typeof import('wasm')
+declare type WASM = typeof import('wasm/wasm_bg.wasm')
