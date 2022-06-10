@@ -38,18 +38,19 @@ export const Canvas: React.FC<CanvasProps> = ({
 
       const { instance } = wasmSource
 
-      const draw = () => {
-        // @ts-ignore
-        const ptr = instance.exports.create_buffer(width, height)
-        
+      // @ts-ignore
+      const ptr = instance.exports.create_buffer(width, height)
+
+      const draw = () => {        
         // @ts-ignore
         instance.exports.fill(ptr, width, height)
         
         // @ts-ignore
         const resultView = new Uint8ClampedArray(instance.exports.memory.buffer, ptr, width * height * 4)
         
+        // TO BE USED ON CANVAS RESIZE OR DESTROY
         // @ts-ignore
-        instance.exports.destroy_buffer(ptr, width, height)
+        // instance.exports.destroy_buffer(ptr, width, height)
 
         imageData.data.set(resultView)
 
