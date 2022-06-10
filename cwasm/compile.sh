@@ -9,3 +9,5 @@ em++ -Os \
   -s EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' \
   -o out.wasm \
   ./main.cpp
+
+cp ./out.wasm ../public/out.wasm

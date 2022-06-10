@@ -18,7 +18,7 @@ extern "C" {
     size_t size;
 
     for (int i = 0; i < width * height * 4; i += 4) {
-      img_in[i + 0] = 0x22;
+      img_in[i + 0] = rand() % 0xff;
       img_in[i + 1] = 0x88;
       img_in[i + 2] = 0x99;
       img_in[i + 3] = 0xFF;
