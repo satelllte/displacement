@@ -41,12 +41,27 @@ export const Canvas: React.FC<CanvasProps> = ({
       // @ts-ignore
       const ptr = instance.exports.create_buffer(width, height)
 
+      // @ts-ignore
+      const resultView = new Uint8ClampedArray(instance.exports.memory.buffer, ptr, width * height * 4)
+
       const draw = () => {
+        console.info('---------- before ------')
+        console.info('resultView[0]: ', resultView[0])
+        console.info('resultView[4]: ', resultView[4])
+
+        // @ts-ignore
+        instance.exports.fill(ptr, width, height)
+        
+        console.info('---------- after fill 1 ------')
+        console.info('resultView[0]: ', resultView[0])
+        console.info('resultView[4]: ', resultView[4])
+        
         // @ts-ignore
         instance.exports.fill(ptr, width, height)
 
-        // @ts-ignore
-        const resultView = new Uint8ClampedArray(instance.exports.memory.buffer, ptr, width * height * 4)
+        console.info('---------- after fill 2 ------')
+        console.info('resultView[0]: ', resultView[0])
+        console.info('resultView[4]: ', resultView[0])
         
         // TO BE USED ON CANVAS RESIZE OR DESTROY
         // @ts-ignore
