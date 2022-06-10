@@ -30,7 +30,7 @@ export const Canvas: React.FC<CanvasProps> = ({
       console.log('imports: ', imports)
 
       const wasmSource = await WebAssembly.instantiateStreaming(
-        fetch('/f.out.wasm'),
+        fetch('/out.wasm'),
         imports
       )
       
