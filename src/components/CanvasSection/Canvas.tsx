@@ -41,10 +41,10 @@ export const Canvas: React.FC<CanvasProps> = ({
       // @ts-ignore
       const ptr = instance.exports.create_buffer(width, height)
 
-      const draw = () => {        
+      const draw = () => {
         // @ts-ignore
         instance.exports.fill(ptr, width, height)
-        
+
         // @ts-ignore
         const resultView = new Uint8ClampedArray(instance.exports.memory.buffer, ptr, width * height * 4)
         
@@ -60,6 +60,21 @@ export const Canvas: React.FC<CanvasProps> = ({
       }
 
       draw()
+
+      const drawJs = () => {
+        const data = imageData.data
+        for (let i = 0; i < data.length; i += 4) {
+          data[i] = Math.floor(Math.random() * 256)
+          data[i + 1] = 0x33 
+          data[i + 2] = 0xaa
+          data[i + 3] = 0xff
+        }
+        ctx2d.putImageData(imageData, 0, 0)
+
+        // requestAnimationFrame(drawJs)
+      }
+
+      // drawJs()
     })()
 
   }, [size])
