@@ -30,7 +30,7 @@ export const Canvas: React.FC<CanvasProps> = ({
       console.log('imports: ', imports)
 
       const wasmSource = await WebAssembly.instantiateStreaming(
-        fetch('/e.out.wasm'),
+        fetch('/f.out.wasm'),
         imports
       )
       
@@ -49,7 +49,7 @@ export const Canvas: React.FC<CanvasProps> = ({
         const resultView = new Uint8ClampedArray(instance.exports.memory.buffer, ptr, width * height * 4)
         
         // @ts-ignore
-        instance.exports.destroy_buffer(p, width, height)
+        instance.exports.destroy_buffer(ptr, width, height)
 
         imageData.data.set(resultView)
 
