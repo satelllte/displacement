@@ -38,7 +38,7 @@ export const Canvas: React.FC<CanvasProps> = ({
     }
 
     draw()
-  }, [])
+  }, [wasm])
 
   return (
     <canvas ref={canvasRef} className='absolute max-h-full max-w-full bg-neutral-900' />
