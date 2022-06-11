@@ -7,11 +7,11 @@ static mut BUFFER: [u8; MAX_WIDTH * MAX_HEIGHT * 4] = [0; MAX_WIDTH * MAX_HEIGHT
 
 #[wasm_bindgen(js_name = getBufferPointer)]
 pub fn get_buffer_pointer() -> *const u8 {
-  let pointer: *const u8;
-  unsafe {
-    pointer = BUFFER.as_ptr();
-  }
-  pointer
+    let pointer: *const u8;
+    unsafe {
+        pointer = BUFFER.as_ptr();
+    }
+    pointer
 }
 
 #[wasm_bindgen(js_name = fillColor)]
