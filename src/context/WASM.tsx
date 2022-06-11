@@ -12,7 +12,7 @@ export const WASMContextProvider: React.FC<WASMContextProviderProps> = ({
 
   useEffect(() => {
     (async() => {
-      const wasm = await import('wasm')
+      const wasm = await import('wasm/wasm_bg.wasm')
       setState({ wasm })
     })()
   }, [])
