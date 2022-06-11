@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { Header } from './Header'
 
 interface LayoutProps {
   children: ReactNode,
@@ -11,9 +12,7 @@ export const Layout: React.FC<LayoutProps> = ({
 }) => {
   return (
     <div className='absolute inset-0 overflow-hidden flex flex-col'>
-      <header className='p-4 box-border border-b border-neutral-900'>
-        <h1 className='text-lg'>DISPLACEMENT</h1>
-      </header>
+      <Header/>
       <main className={`flex-1 relative ${containerClassName}`}>
         {children}
       </main>
