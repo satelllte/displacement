@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { WASMContext } from "../../context/WASM"
+import { WASMContext } from "../../context/WASMContext"
 import { Canvas } from "./Canvas"
 
 export const CanvasSection: React.FC<CanvasSectionProps> = ({

@@ -1,14 +1,22 @@
 import { ReactNode, useEffect, useState } from 'react'
 import { createContext } from 'react'
 
-const initial: IWASMContext = {}
+interface WASMContextProps {
+  wasm?: WASM
+}
 
-export const WASMContext = createContext(initial)
+interface WASMContextProviderProps {
+  children: ReactNode
+}
+
+const initial: WASMContextProps = {}
+
+export const WASMContext = createContext<WASMContextProps>(initial)
 
 export const WASMContextProvider: React.FC<WASMContextProviderProps> = ({
   children
 }) => {
-  const [state, setState] = useState<IWASMContext>(initial)
+  const [state, setState] = useState<WASMContextProps>(initial)
 
   useEffect(() => {
     (async() => {
@@ -22,12 +30,4 @@ export const WASMContextProvider: React.FC<WASMContextProviderProps> = ({
       {children}
     </WASMContext.Provider>
   )
-}
-
-interface IWASMContext {
-  wasm?: WASM
-}
-
-interface WASMContextProviderProps {
-  children: ReactNode
 }
