@@ -1,9 +1,13 @@
 import { useContext } from "react"
-import { WASMContext } from "../../context/WASMContext"
+import { WASMContext } from "../context/WASMContext"
 import { Canvas } from "./Canvas"
 
+interface CanvasSectionProps {
+  className?: string
+}
+
 export const CanvasSection: React.FC<CanvasSectionProps> = ({
-  className
+  className = ''
 }) => {
   const { wasm } = useContext(WASMContext)
   return (
@@ -11,12 +15,4 @@ export const CanvasSection: React.FC<CanvasSectionProps> = ({
       {!wasm ? null : <Canvas wasm={wasm}/>}
     </section>
   )
-}
-
-CanvasSection.defaultProps = {
-  className: ''
-}
-
-interface CanvasSectionProps {
-  className?: string
 }

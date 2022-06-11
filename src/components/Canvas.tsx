@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react'
-import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from '../../constants'
+import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from '../constants'
 
 interface CanvasProps {
   wasm: WASM
