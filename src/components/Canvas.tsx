@@ -31,18 +31,18 @@ export const Canvas: React.FC<CanvasProps> = ({
     let g = 0x00
 
     const draw = () => {
-      wasm.fillColor(0x22, g, 0x77, width, height)
+      wasm.fillColor(0x11, g, 0x55, width, height)
       
       imageData.data.set(pixels)
       ctx2d.putImageData(imageData, 0, 0)
 
       g++
-      if (g <= 0xbb) {
+      if (g <= 0x77) {
         requestAnimationFrame(draw)
       }
     }
 
-    draw()
+    setTimeout(draw, 3000)
   }, [wasm])
 
   return (
