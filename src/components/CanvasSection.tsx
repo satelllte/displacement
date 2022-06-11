@@ -6,7 +6,9 @@ export const CanvasSection = () => {
   const { wasm } = useContext(WASMContext)
   return (
     <section id='canvas-section' className='m-4 absolute inset-0 flex justify-center items-center'>
-      {!wasm ? null : <Canvas wasm={wasm}/>}
+      <div className='relative w-full h-full max-w-[500px] max-h-[500px] flex justify-center items-center'>
+        {!wasm ? null : <Canvas wasm={wasm}/>}
+      </div>
     </section>
   )
 }

@@ -23,16 +23,16 @@ export const Canvas: React.FC<CanvasProps> = ({
     const ptr = wasm.getBufferPointer()
     const pixels = new Uint8ClampedArray(wasm.memory.buffer, ptr, width * height * 4)
 
-    let r = 0x00
+    let g = 0x00
 
     const draw = () => {
-      wasm.fillColor(r, 0x77, 0x77, width, height)
+      wasm.fillColor(0x22, g, 0x77, width, height)
       
       imageData.data.set(pixels)
       ctx2d.putImageData(imageData, 0, 0)
 
-      r++
-      if (r <= 0xff) {
+      g++
+      if (g <= 0xbb) {
         requestAnimationFrame(draw)
       }
     }
@@ -41,6 +41,6 @@ export const Canvas: React.FC<CanvasProps> = ({
   }, [wasm])
 
   return (
-    <canvas ref={canvasRef} className='absolute max-h-full max-w-full bg-neutral-900' />
+    <canvas ref={canvasRef} className='drop-shadow-xl absolute max-h-full max-w-full bg-neutral-900' />
   )
 }
