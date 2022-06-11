@@ -19,9 +19,6 @@
 /public/workbox-*.js.map
 /public/fallback-*.js
 
-# wasm
-/public/out.wasm
-
 # misc
 .DS_Store
 *.pem
