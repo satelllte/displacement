@@ -10,13 +10,18 @@ export const Canvas: React.FC<CanvasProps> = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
+  /**
+   * WASM calls demo
+   */
   useEffect(() => {
     const canvas = canvasRef.current as HTMLCanvasElement
 
-    canvas.width = DEFAULT_WIDTH
-    canvas.height = DEFAULT_HEIGHT
+    const width = DEFAULT_WIDTH
+    const height = DEFAULT_HEIGHT
+    
+    canvas.width = width
+    canvas.height = height
 
-    const { width, height } = canvas
     const ctx2d = canvas.getContext('2d') as CanvasRenderingContext2D
     const imageData = ctx2d.getImageData(0, 0, width, height)
     
