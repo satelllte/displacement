@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  BUILD_DEVELOPMENT: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}
+  BUILD_PRODUCTION: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+  NETLIFY_SITE_NAME: xdisplacement
+  NETLIFY_DEVELOPMENT_DEPLOY_ID: ${{ github.sha }}
+
 jobs:
   webassembly:
     name: WebAssembly
@@ -94,8 +100,40 @@ jobs:
     - name: Install dependencies for Netlify CLI
       run: npm ci
     - name: Deploy (Development)
-      if: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}
-      run: npx netlify deploy --dir=out
+      if: ${{ env.BUILD_DEVELOPMENT == 'true' }}
+      run: npx netlify deploy --dir=out --alias ${{ env.NETLIFY_DEVELOPMENT_DEPLOY_ID }}
     - name: Deploy (Production)
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      if: ${{ env.BUILD_PRODUCTION == 'true' }}
       run: npx netlify deploy --dir=out --prod
+
+  lighthouse:
+    name: Lighthouse
+    needs: [deploy]  
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - run: mkdir ./lighthouse-artifacts
+    - name: Lighthouse (Development)
+      if: ${{ env.BUILD_DEVELOPMENT == 'true' }}
+      uses: foo-software/lighthouse-check-action@master
+      with:
+        # https://www.foo.software/docs/lighthouse-check-github-action/configuration
+        urls: 'https://${{ env.NETLIFY_DEVELOPMENT_DEPLOY_ID }}--${{ env.NETLIFY_SITE_NAME }}.netlify.app'
+        outputDirectory: ./lighthouse-artifacts
+        device: 'all'
+        gitHubAccessToken: ${{ github.token }}
+        prCommentEnabled: true
+        prCommentSaveOld: true
+    - name: Lighthouse (Production)
+      if: ${{ env.BUILD_PRODUCTION == 'true' }}
+      uses: foo-software/lighthouse-check-action@master
+      with:
+        # https://www.foo.software/docs/lighthouse-check-github-action/configuration
+        urls: 'https://${{ env.NETLIFY_SITE_NAME }}.netlify.app'
+        outputDirectory: ./lighthouse-artifacts
+        device: 'all'
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: lighthouse
+        path: ./lighthouse-artifacts
