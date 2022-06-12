@@ -10,7 +10,7 @@ env:
   IS_DEVELOPMENT: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}
   IS_PRODUCTION: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
   NETLIFY_SITE_NAME: 'xdisplacement'
-  NETLIFY_DEVELOPMENT_DEPLOY_ID: ${{ github.sha }}
+  NETLIFY_DEVELOPMENT_DEPLOY_ID: '${{ github.ref_name }}-${{ github.sha }}'
 
 jobs:
   webassembly:
@@ -101,7 +101,7 @@ jobs:
       run: npm ci
     - name: Deploy (Development)
       if: ${{ env.IS_DEVELOPMENT }}
-      run: npx netlify deploy --dir=out --id ${{ env.NETLIFY_DEVELOPMENT_DEPLOY_ID }}
+      run: npx netlify deploy --dir=out --alias ${{ env.NETLIFY_DEVELOPMENT_DEPLOY_ID }}
     - name: Deploy (Production)
       if: ${{ env.IS_PRODUCTION }}
       run: npx netlify deploy --dir=out --prod
