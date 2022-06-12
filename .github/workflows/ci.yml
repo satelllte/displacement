@@ -111,7 +111,7 @@ jobs:
     needs: [deploy]  
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v3
     - run: mkdir ./lighthouse-artifacts
     - name: Lighthouse (Development)
       if: ${{ env.BUILD_DEVELOPMENT == 'true' }}
