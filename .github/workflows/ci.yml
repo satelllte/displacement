@@ -112,6 +112,7 @@ jobs:
       with:
         urls: 'https://xdisplacement.netlify.app' # TODO: replace with draft Netlify URL
         outputDirectory: ./lighthouse-artifacts
+        device: 'all'
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
