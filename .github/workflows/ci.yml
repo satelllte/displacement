@@ -115,7 +115,7 @@ jobs:
     - run: mkdir ./lighthouse-artifacts
     - name: Lighthouse (Development)
       if: ${{ env.BUILD_DEVELOPMENT == 'true' }}
-      uses: foo-software/lighthouse-check-action@v8
+      uses: foo-software/lighthouse-check-action@v8.0.2
       with:
         # https://www.foo.software/docs/lighthouse-check-github-action/configuration
         urls: 'https://${{ env.NETLIFY_DEVELOPMENT_DEPLOY_ID }}--${{ env.NETLIFY_SITE_NAME }}.netlify.app'
@@ -126,7 +126,7 @@ jobs:
         prCommentSaveOld: true
     - name: Lighthouse (Production)
       if: ${{ env.BUILD_PRODUCTION == 'true' }}
-      uses: foo-software/lighthouse-check-action@v8
+      uses: foo-software/lighthouse-check-action@v8.0.2
       with:
         # https://www.foo.software/docs/lighthouse-check-github-action/configuration
         urls: 'https://${{ env.NETLIFY_SITE_NAME }}.netlify.app'
