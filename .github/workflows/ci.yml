@@ -9,6 +9,8 @@ on:
 env:
   IS_DEVELOPMENT: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}
   IS_PRODUCTION: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+  NETLIFY_SITE_NAME: 'xdisplacement'
+  NETLIFY_DEVELOPMENT_DEPLOY_ID: ${{ github.sha }}
 
 jobs:
   webassembly:
@@ -99,7 +101,7 @@ jobs:
       run: npm ci
     - name: Deploy (Development)
       if: ${{ env.IS_DEVELOPMENT }}
-      run: npx netlify deploy --dir=out
+      run: npx netlify deploy --dir=out --id ${{ env.NETLIFY_DEVELOPMENT_DEPLOY_ID }}
     - name: Deploy (Production)
       if: ${{ env.IS_PRODUCTION }}
       run: npx netlify deploy --dir=out --prod
@@ -111,15 +113,23 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - run: mkdir ./lighthouse-artifacts
-    - name: Lighthouse
+    - name: Lighthouse (Development)
+      if: ${{ env.IS_DEVELOPMENT }}
       uses: foo-software/lighthouse-check-action@master
       with:
-        urls: 'https://xdisplacement.netlify.app' # TODO: replace with draft Netlify URL
+        urls: 'https://${{ env.NETLIFY_DEVELOPMENT_DEPLOY_ID }}--${{ env.NETLIFY_SITE_NAME }}.netlify.app'
         outputDirectory: ./lighthouse-artifacts
         device: 'all'
         gitHubAccessToken: ${{ github.token }} # required for PR comments
         prCommentEnabled: true
         prCommentSaveOld: true
+    - name: Lighthouse (Production)
+      if: ${{ env.IS_PRODUCTION }}
+      uses: foo-software/lighthouse-check-action@master
+      with:
+        urls: 'https://${{ env.NETLIFY_SITE_NAME }}.netlify.app'
+        outputDirectory: ./lighthouse-artifacts
+        device: 'all'
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
