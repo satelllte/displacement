@@ -110,9 +110,9 @@ jobs:
       uses: foo-software/lighthouse-check-action@master
       with:
         urls: 'https://xdisplacement.netlify.app' # TODO: replace with draft Netlify URL
-        outputDirectory: ${{ github.workspace }}/tmp/artifacts
+        outputDirectory: ./lighthouse-artifacts
     - name: Upload artifacts
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v3
       with:
-        name: Lighthouse reports
-        path: ${{ github.workspace }}/tmp/artifacts
+        name: lighthouse
+        path: ./lighthouse-artifacts
