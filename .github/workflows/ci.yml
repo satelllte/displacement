@@ -99,3 +99,20 @@ jobs:
     - name: Deploy (Production)
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       run: npx netlify deploy --dir=out --prod
+
+  lighthouse:
+    name: Lighthouse
+    needs: [deploy]  
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Lighthouse
+      uses: foo-software/lighthouse-check-action@master
+      with:
+        urls: 'https://xdisplacement.netlify.app' # TODO: replace with draft Netlify URL
+        outputDirectory: ${{ github.workspace }}/tmp/artifacts
+    - name: Upload artifacts
+      uses: actions/upload-artifact@master
+      with:
+        name: Lighthouse reports
+        path: ${{ github.workspace }}/tmp/artifacts
