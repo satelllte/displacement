@@ -114,6 +114,8 @@ jobs:
         outputDirectory: ./lighthouse-artifacts
         device: 'all'
         gitHubAccessToken: ${{ github.token }} # required for PR comments
+        prCommentEnabled: true
+        prCommentSaveOld: true
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
