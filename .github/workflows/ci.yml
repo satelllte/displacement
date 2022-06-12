@@ -7,10 +7,10 @@ on:
     branches: [ main ]
 
 env:
-  IS_DEVELOPMENT: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}
-  IS_PRODUCTION: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-  NETLIFY_SITE_NAME: 'xdisplacement'
-  NETLIFY_DEVELOPMENT_DEPLOY_ID: '${{ github.ref_name }}-${{ github.sha }}'
+  BUILD_DEVELOPMENT: ${{ github.event_name == 'pull_request' && github.ref != 'refs/heads/main' }}
+  BUILD_PRODUCTION: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+  NETLIFY_SITE_NAME: xdisplacement
+  NETLIFY_DEVELOPMENT_DEPLOY_ID: ${{ github.sha }}
 
 jobs:
   webassembly:
@@ -100,10 +100,10 @@ jobs:
     - name: Install dependencies for Netlify CLI
       run: npm ci
     - name: Deploy (Development)
-      if: ${{ env.IS_DEVELOPMENT }}
+      if: ${{ env.BUILD_DEVELOPMENT == 'true' }}
       run: npx netlify deploy --dir=out --alias ${{ env.NETLIFY_DEVELOPMENT_DEPLOY_ID }}
     - name: Deploy (Production)
-      if: ${{ env.IS_PRODUCTION }}
+      if: ${{ env.BUILD_PRODUCTION == 'true' }}
       run: npx netlify deploy --dir=out --prod
 
   lighthouse:
@@ -114,7 +114,7 @@ jobs:
     - uses: actions/checkout@master
     - run: mkdir ./lighthouse-artifacts
     - name: Lighthouse (Development)
-      if: ${{ env.IS_DEVELOPMENT }}
+      if: ${{ env.BUILD_DEVELOPMENT == 'true' }}
       uses: foo-software/lighthouse-check-action@master
       with:
         urls: 'https://${{ env.NETLIFY_DEVELOPMENT_DEPLOY_ID }}--${{ env.NETLIFY_SITE_NAME }}.netlify.app'
@@ -124,7 +124,7 @@ jobs:
         prCommentEnabled: true
         prCommentSaveOld: true
     - name: Lighthouse (Production)
-      if: ${{ env.IS_PRODUCTION }}
+      if: ${{ env.BUILD_PRODUCTION == 'true' }}
       uses: foo-software/lighthouse-check-action@master
       with:
         urls: 'https://${{ env.NETLIFY_SITE_NAME }}.netlify.app'
