@@ -117,16 +117,18 @@ jobs:
       if: ${{ env.BUILD_DEVELOPMENT == 'true' }}
       uses: foo-software/lighthouse-check-action@master
       with:
+        # https://www.foo.software/docs/lighthouse-check-github-action/configuration
         urls: 'https://${{ env.NETLIFY_DEVELOPMENT_DEPLOY_ID }}--${{ env.NETLIFY_SITE_NAME }}.netlify.app'
         outputDirectory: ./lighthouse-artifacts
         device: 'all'
-        gitHubAccessToken: ${{ github.token }} # required for PR comments
+        gitHubAccessToken: ${{ github.token }}
         prCommentEnabled: true
         prCommentSaveOld: true
     - name: Lighthouse (Production)
       if: ${{ env.BUILD_PRODUCTION == 'true' }}
       uses: foo-software/lighthouse-check-action@master
       with:
+        # https://www.foo.software/docs/lighthouse-check-github-action/configuration
         urls: 'https://${{ env.NETLIFY_SITE_NAME }}.netlify.app'
         outputDirectory: ./lighthouse-artifacts
         device: 'all'
