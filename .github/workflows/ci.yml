@@ -15,6 +15,7 @@ env:
 jobs:
   webassembly:
     name: WebAssembly
+    if: false # DISABLED TEMPORARY
     runs-on: ubuntu-latest
     env:
       CARGO_TERM_COLOR: always
@@ -42,6 +43,7 @@ jobs:
 
   web:
     name: Web
+    if: false # DISABLED TEMPORARY
     runs-on: ubuntu-latest
     steps:
     - uses: actions/cache@v3
