@@ -2,6 +2,7 @@ import React from 'react'
 import { CanvasContext } from '../context/CanvasContext'
 import { WASMContext } from '../context/WASMContext'
 import { randomInt } from '../utils/random'
+import { Button } from './Button'
 
 export const RenderAction = () => {
   const canvasRef = React.useContext(CanvasContext)
@@ -33,12 +34,8 @@ export const RenderAction = () => {
   }
 
   return (
-    <button
-      disabled={disabled}
-      onClick={render}
-      className='p-4 w-full bg-neutral-800/50 disabled:opacity-50 hover:bg-neutral-800/75 active:bg-neutral-800 transition-all outline outline-2 outline-transparent focus:outline-neutral-800 drop-shadow-xl'
-    >
+    <Button disabled={disabled} onClick={render}>
       Render
-    </button>
+    </Button>
   )
 }
