@@ -25,24 +25,13 @@ export const Canvas: React.FC<CanvasProps> = ({
     const ctx2d = canvas.getContext('2d') as CanvasRenderingContext2D
     const imageData = ctx2d.getImageData(0, 0, width, height)
     
-    const ptr = wasm.getBufferPointer()
-    const pixels = new Uint8ClampedArray(wasm.memory.buffer, ptr, width * height * 4)
+    const pointer = wasm.getBufferPointer()
+    const pixels = new Uint8ClampedArray(wasm.memory.buffer, pointer, width * height * 4)
 
-    let g = 0x00
+    wasm.fillColor(0x11, 0x44, 0x55, width, height)
 
-    const draw = () => {
-      wasm.fillColor(0x11, g, 0x55, width, height)
-      
-      imageData.data.set(pixels)
-      ctx2d.putImageData(imageData, 0, 0)
-
-      g++
-      if (g <= 0x77) {
-        requestAnimationFrame(draw)
-      }
-    }
-
-    setTimeout(draw, 3000)
+    imageData.data.set(pixels)
+    ctx2d.putImageData(imageData, 0, 0)    
   }, [wasm])
 
   return (
