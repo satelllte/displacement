@@ -13,7 +13,7 @@ export const Canvas = () => {
     
     canvas.width = width
     canvas.height = height
-  }, [])
+  }, [canvasRef])
 
   return (
     <div className='absolute inset-4 overflow-y-auto'>
