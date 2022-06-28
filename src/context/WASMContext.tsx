@@ -1,32 +1,29 @@
-import { ReactNode, useEffect, useState } from 'react'
-import { createContext } from 'react'
+import React from 'react'
 
-interface WASMContextProps {
-  wasm?: WASM
-}
+type WASMContext = WASM | null
 
 interface WASMContextProviderProps {
-  children: ReactNode
+  children: React.ReactNode
 }
 
-const initial: WASMContextProps = {}
+const defaultValue: WASMContext = null
 
-export const WASMContext = createContext<WASMContextProps>(initial)
+export const WASMContext = React.createContext<WASMContext>(defaultValue)
 
 export const WASMContextProvider: React.FC<WASMContextProviderProps> = ({
   children
 }) => {
-  const [state, setState] = useState<WASMContextProps>(initial)
+  const [wasm, setWasm] = React.useState<WASMContext>(null)
 
-  useEffect(() => {
+  React.useEffect(() => {
     (async() => {
       const wasm = await import('wasm/wasm_bg.wasm')
-      setState({ wasm })
+      setWasm(wasm)
     })()
   }, [])
 
   return (
-    <WASMContext.Provider value={state}>
+    <WASMContext.Provider value={wasm}>
       {children}
     </WASMContext.Provider>
   )

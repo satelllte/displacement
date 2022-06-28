@@ -12,6 +12,7 @@ export const CanvasContextProvider: React.FC<CanvasContextProviderProps> = ({
   children
 }) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null)
+
   return (
     <CanvasContext.Provider value={canvasRef}>
       {children}
