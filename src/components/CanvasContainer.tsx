@@ -6,11 +6,7 @@ export const CanvasContainer = () => {
   const canvasRef = React.useContext(CanvasContext)
 
   React.useEffect(() => {
-    if (!canvasRef.current) {
-      throw new Error('canvasRef is not accessible')
-    }
-
-    const canvas = canvasRef.current
+    const canvas = canvasRef.current as HTMLCanvasElement
 
     const width = DEFAULT_WIDTH
     const height = DEFAULT_HEIGHT
