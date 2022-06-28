@@ -23,6 +23,7 @@ jobs:
       run:
         working-directory: wasm
     steps:
+    - uses: actions/checkout@v3
     - uses: actions/cache@v3
       with:
         path: |
@@ -32,7 +33,6 @@ jobs:
           ~/.cargo/git/db/
           target/
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-    - uses: actions/checkout@v3
     - name: Tests
       run: ./rs-test.sh
     - name: Code quality
@@ -46,6 +46,7 @@ jobs:
     env:
       NEXT_CI_BUILD: true
     steps:
+    - uses: actions/checkout@v3
     - uses: actions/cache@v3
       with:
         path: |
@@ -55,7 +56,6 @@ jobs:
           ~/.cargo/git/db/
           ./wasm/target/
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-    - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
