@@ -14,7 +14,7 @@ const Home: NextPage = () => {
             <div className='absolute inset-0 flex justify-center items-center'>
               <div className='relative flex items-center w-full h-full max-w-[500px] max-h-[500px]'>
                 <WASMContext.Consumer>
-                  {({ wasm }) => {
+                  {({ wasm }) => {
                     return wasm ? <Canvas wasm={wasm}/> : null
                   }}
                 </WASMContext.Consumer>
