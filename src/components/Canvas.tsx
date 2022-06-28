@@ -1,19 +1,11 @@
-import { useRef, useEffect } from 'react'
+import React from 'react'
 import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from '../constants'
+import { CanvasContext } from '../context/CanvasContext'
 
-interface CanvasProps {
-  wasm: WASM
-}
+export const Canvas = () => {
+  const canvasRef = React.useContext(CanvasContext)
 
-export const Canvas: React.FC<CanvasProps> = ({
-  wasm
-}) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-
-  /**
-   * WASM calls demo
-   */
-  useEffect(() => {
+  React.useEffect(() => {
     const canvas = canvasRef.current as HTMLCanvasElement
 
     const width = DEFAULT_WIDTH
@@ -21,20 +13,15 @@ export const Canvas: React.FC<CanvasProps> = ({
     
     canvas.width = width
     canvas.height = height
-
-    const ctx2d = canvas.getContext('2d') as CanvasRenderingContext2D
-    const imageData = ctx2d.getImageData(0, 0, width, height)
-    
-    const pointer = wasm.getBufferPointer()
-    const pixels = new Uint8ClampedArray(wasm.memory.buffer, pointer, width * height * 4)
-
-    wasm.fillColor(0x11, 0x44, 0x55, width, height)
-
-    imageData.data.set(pixels)
-    ctx2d.putImageData(imageData, 0, 0)    
-  }, [wasm])
+  }, [])
 
   return (
-    <canvas ref={canvasRef} className='drop-shadow-xl absolute max-h-full max-w-full bg-neutral-900' />
+    <div className='absolute inset-4 overflow-y-auto'>
+      <div className='absolute inset-0 flex justify-center items-center'>
+        <div className='relative flex items-center w-full h-full max-w-[500px] max-h-[500px]'>
+          <canvas ref={canvasRef} className='drop-shadow-xl absolute max-h-full max-w-full bg-neutral-900' />
+        </div>
+      </div>
+    </div>
   )
 }

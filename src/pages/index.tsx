@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { CanvasContainer } from '../components/CanvasContainer';
+import { Canvas } from '../components/Canvas';
 import { Options } from '../components/Options';
 
 const Home: NextPage = () => {
@@ -10,7 +10,7 @@ const Home: NextPage = () => {
       </header>
       <div className='md:flex'>
         <section className='mt-16 h-[calc(100vh-theme(spacing.16))] relative md:flex-1'>
-          <CanvasContainer/>
+          <Canvas/>
         </section>
         <section className='mt-16 h-[calc(100vh-theme(spacing.16))] relative md:flex-1'>
           <Options/>
