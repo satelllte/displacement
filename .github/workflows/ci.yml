@@ -31,7 +31,7 @@ jobs:
           ~/.cargo/registry/cache/
           ~/.cargo/git/db/
           target/
-        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        key: ${{ runner.os }}-cargo-${{ hashFiles('Cargo.lock') }}
     - uses: actions/checkout@v3
     - name: Tests
       run: ./rs-test.sh
@@ -54,7 +54,7 @@ jobs:
           ~/.cargo/registry/cache/
           ~/.cargo/git/db/
           ./wasm/target/
-        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        key: ${{ runner.os }}-cargo-${{ hashFiles('wasm/Cargo.lock') }}
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
