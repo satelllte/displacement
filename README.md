@@ -10,6 +10,8 @@
 
 Displacement maps generator.
 
+[![CI](https://github.com/satelllte/displacement/actions/workflows/ci.yml/badge.svg)](https://github.com/satelllte/displacement/actions/workflows/ci.yml)
+
 ## Try in Online Code Editor
 
 ### [Gitpod](https://www.gitpod.io/)
