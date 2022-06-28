@@ -1,16 +1,12 @@
-# DISCLAIMER
-
-<br/>
-
-**_NOT A FINAL PRODUCT, THE PRODUCT IS IN THE EARLY STAGES OF DEVELOPMENT_**
-
-<br/>
-
 # DISPLACEMENT
 
 Displacement maps generator.
 
 [![CI](https://github.com/satelllte/displacement/actions/workflows/ci.yml/badge.svg)](https://github.com/satelllte/displacement/actions/workflows/ci.yml)
+
+## DISCLAIMER
+
+_NOT A FINAL PRODUCT, THE PRODUCT IS IN THE EARLY STAGES OF DEVELOPMENT_
 
 ## Try in Online Code Editor
 
