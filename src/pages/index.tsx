@@ -1,7 +1,6 @@
 import type { NextPage } from 'next'
-import { Canvas } from '../components/Canvas';
+import { CanvasContainer } from '../components/CanvasContainer';
 import { Options } from '../components/Options';
-import { WASMContext } from '../context/WASMContext';
 
 const Home: NextPage = () => {
   return (
@@ -11,17 +10,7 @@ const Home: NextPage = () => {
       </header>
       <div className='md:flex'>
         <section className='mt-16 h-[calc(100vh-theme(spacing.16))] relative md:flex-1'>
-          <div className='absolute inset-4 overflow-y-auto'>
-            <div className='absolute inset-0 flex justify-center items-center'>
-              <div className='relative flex items-center w-full h-full max-w-[500px] max-h-[500px]'>
-                <WASMContext.Consumer>
-                  {({ wasm }) => {
-                    return wasm ? <Canvas wasm={wasm}/> : null
-                  }}
-                </WASMContext.Consumer>
-              </div>
-            </div>
-          </div>
+          <CanvasContainer/>
         </section>
         <section className='mt-16 h-[calc(100vh-theme(spacing.16))] relative md:flex-1'>
           <Options/>
