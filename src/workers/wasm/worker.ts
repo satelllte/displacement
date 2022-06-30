@@ -1,11 +1,12 @@
 import { randomInt } from '../../utils/random'
-import { Message, MessageType } from './types'
+import { WASMWorkerMessageType } from './types'
 import type {
-  MessageReady,
-  MessageRenderCompleted,
+  WASMWorkerMessage,
+  WASMWorkerReadyMessage,
+  WASMWorkerRenderCompletedMessage,
 } from './types'
 
-declare var self: IDedicatedWorkerGlobalScope<Message>
+declare var self: IDedicatedWorkerGlobalScope<WASMWorkerMessage>
 
 (async() => {
   const wasm = await import('wasm/wasm_bg.wasm')
@@ -15,7 +16,7 @@ declare var self: IDedicatedWorkerGlobalScope<Message>
 
   self.onmessage = (event) => {
     switch(event.data.type) {
-      case MessageType.render:
+      case WASMWorkerMessageType.render:
         const { iterationsCount, width, height } = event.data
         const pixels = new Uint8ClampedArray(buffer, pointer, width * height * 4)
 
@@ -44,8 +45,8 @@ declare var self: IDedicatedWorkerGlobalScope<Message>
           )
         }
 
-        const renderCompletedMessage: MessageRenderCompleted = {
-          type: MessageType.renderCompleted,
+        const renderCompletedMessage: WASMWorkerRenderCompletedMessage = {
+          type: WASMWorkerMessageType.renderCompleted,
           pixels,
         }
 
@@ -55,8 +56,8 @@ declare var self: IDedicatedWorkerGlobalScope<Message>
     }
   }
 
-  const readyMessage: MessageReady = {
-    type: MessageType.ready
+  const readyMessage: WASMWorkerReadyMessage = {
+    type: WASMWorkerMessageType.ready
   }
 
   self.postMessage(readyMessage)

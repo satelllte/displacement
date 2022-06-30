@@ -1,28 +1,28 @@
-export enum MessageType {
-  ready,
-  render,
-  renderCompleted,
+export enum WASMWorkerMessageType {
+  ready = 'ready',
+  render = 'render',
+  renderCompleted = 'renderCompleted',
 }
 
-export type MessageReady = {
-  type: MessageType.ready
+export type WASMWorkerReadyMessage = {
+  type: WASMWorkerMessageType.ready
 }
 
-export type MessageRender = {
-  type: MessageType.render
+export type WASMWorkerRenderMessage = {
+  type: WASMWorkerMessageType.render
   width: number,
   height: number,
   iterationsCount: number
 }
 
-export type MessageRenderCompleted = {
-  type: MessageType.renderCompleted
+export type WASMWorkerRenderCompletedMessage = {
+  type: WASMWorkerMessageType.renderCompleted
   pixels: Uint8ClampedArray
 }
 
-export type Message =
-  | MessageReady
-  | MessageRender
-  | MessageRenderCompleted
+export type WASMWorkerMessage =
+  | WASMWorkerReadyMessage
+  | WASMWorkerRenderMessage
+  | WASMWorkerRenderCompletedMessage
 
-export interface WASMWorker extends IWorker<Message> {}
+export interface WASMWorker extends IWorker<WASMWorkerMessage> {}

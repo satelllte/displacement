@@ -1,8 +1,8 @@
 import React from 'react'
 import { CanvasContext } from '../context/CanvasContext'
 import { WASMWorkerContext } from '../context/WASMWorkerContext'
-import { MessageType } from '../workers/wasm/types'
-import type { MessageRender } from '../workers/wasm/types'
+import { WASMWorkerMessageType } from '../workers/wasm/types'
+import type { WASMWorkerRenderMessage } from '../workers/wasm/types'
 import { Button } from './Button'
 
 export const RenderAction = () => {
@@ -20,7 +20,7 @@ export const RenderAction = () => {
 
     worker.onmessage = (event) => {
       switch (event.data.type) {
-        case MessageType.renderCompleted:
+        case WASMWorkerMessageType.renderCompleted:
           const { pixels } = event.data
 
           const canvas = canvasRef.current as HTMLCanvasElement
@@ -47,8 +47,8 @@ export const RenderAction = () => {
     const canvas = canvasRef.current as HTMLCanvasElement
     const { width, height } = canvas;
 
-    const renderMessage: MessageRender = {
-      type: MessageType.render,
+    const renderMessage: WASMWorkerRenderMessage = {
+      type: WASMWorkerMessageType.render,
       width,
       height,
       iterationsCount: 50,

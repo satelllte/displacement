@@ -1,5 +1,6 @@
 import React from 'react'
-import { MessageType, WASMWorker } from '../workers/wasm/types'
+import { WASMWorkerMessageType } from '../workers/wasm/types'
+import type { WASMWorker } from '../workers/wasm/types'
 
 type WASMWorkerContext = WASMWorker | null
 
@@ -21,7 +22,7 @@ export const WASMWorkerContextProvider: React.FC<WASMWorkerContextProviderProps>
 
     worker.onmessage = (event) => {
       switch (event.data.type) {
-        case MessageType.ready:
+        case WASMWorkerMessageType.ready:
           setContext(worker)
           break
       }
