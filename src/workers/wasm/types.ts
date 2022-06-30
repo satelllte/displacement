@@ -1,6 +1,7 @@
 export enum MessageType {
   ready,
   render,
+  renderCompleted,
 }
 
 export type MessageReady = {
@@ -9,12 +10,19 @@ export type MessageReady = {
 
 export type MessageRender = {
   type: MessageType.render
+  imageData: ImageData
   iterationsCount: number
+}
+
+export type MessageRenderCompleted = {
+  type: MessageType.renderCompleted
+  pixels: Uint8ClampedArray
 }
 
 export type Message =
   | MessageReady
   | MessageRender
+  | MessageRenderCompleted
 
 export interface WASMWorker extends Worker {
   onmessage: ((ev: MessageEvent<Message>) => void) | null
