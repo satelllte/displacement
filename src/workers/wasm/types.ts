@@ -25,8 +25,4 @@ export type Message =
   | MessageRender
   | MessageRenderCompleted
 
-export interface WASMWorker extends Worker {
-  onmessage: ((ev: MessageEvent<Message>) => void) | null
-  postMessage(message: Message, transfer: Transferable[]): void
-  postMessage(message: Message, options?: StructuredSerializeOptions): void
-}
+export interface WASMWorker extends IWorker<Message> {}
