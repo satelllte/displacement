@@ -1,9 +1,8 @@
 import { randomInt } from '../../utils/random'
-import {
+import { MessageType } from './types'
+import type {
   WASMWorker,
-  MessageType,
   MessageReady,
-  MessageRender,
   MessageRenderCompleted,
 } from './types'
 
