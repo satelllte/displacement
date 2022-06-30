@@ -8,6 +8,7 @@
 
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
+    "dbaeumer.vscode-eslint",
     "rust-lang.rust-analyzer",
     "bungcip.better-toml",
     "serayuzgur.crates",
