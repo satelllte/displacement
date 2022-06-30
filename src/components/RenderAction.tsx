@@ -55,7 +55,7 @@ export const RenderAction = () => {
       type: WASMWorkerMessageType.render,
       width,
       height,
-      iterationsCount: iterations,
+      iterations,
     }
 
     worker.postMessage(renderMessage)
