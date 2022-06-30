@@ -11,7 +11,7 @@ export const RenderAction = () => {
 
   const [renderInProgress, setRenderInProgress] = React.useState<boolean>(false)
 
-  const disabled = !worker || renderInProgress // TODO: add a separate "loading" state to the button
+  const disabled = !worker || renderInProgress
 
   React.useEffect(() => {
     if (!worker) {
