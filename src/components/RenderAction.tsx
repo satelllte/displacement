@@ -1,4 +1,6 @@
 import React from 'react'
+import { useRecoilCallback } from 'recoil'
+import { iterationsState } from '../state'
 import { CanvasContext } from '../context/CanvasContext'
 import { WASMContext } from '../context/WASMContext'
 import { WASMWorkerMessageType } from '../workers/wasm/types'
@@ -35,27 +37,29 @@ export const RenderAction = () => {
           break
       }
     }
-  }, [worker])
+  }, [worker, canvasRef])
 
-  const render = () => {
+  const render = useRecoilCallback(({ snapshot }) => async () => {
     if (!worker) {
       throw new Error('worker is not ready yet')
     }
-
+    
     setRenderInProgress(true)
+    
+    const iterations = await snapshot.getPromise(iterationsState)
 
     const canvas = canvasRef.current as HTMLCanvasElement
-    const { width, height } = canvas;
+    const { width, height } = canvas
 
     const renderMessage: WASMWorkerRenderMessage = {
       type: WASMWorkerMessageType.render,
       width,
       height,
-      iterationsCount: 50,
+      iterations,
     }
 
     worker.postMessage(renderMessage)
-  }
+  }, [worker, canvasRef])
 
   return (
     <Button disabled={disabled} onClick={render}>
