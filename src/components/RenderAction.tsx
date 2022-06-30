@@ -9,9 +9,6 @@ export const RenderAction = () => {
   const canvasRef = React.useContext(CanvasContext)
   const worker = React.useContext(WASMWorkerContext)
 
-  const ctx2dRef = React.useRef<CanvasRenderingContext2D>()
-  const imageDataRef = React.useRef<ImageData>()
-
   const [renderInProgress, setRenderInProgress] = React.useState<boolean>(false)
 
   const disabled = !worker || renderInProgress // TODO: add a separate "loading" state to the button
@@ -26,16 +23,12 @@ export const RenderAction = () => {
         case MessageType.renderCompleted:
           const { pixels } = event.data
 
-          if (!ctx2dRef.current) {
-            throw new Error('"ctx2dRef" value is not set at render request')
-          }
+          const canvas = canvasRef.current as HTMLCanvasElement
+          const context2d = canvas.getContext('2d') as CanvasRenderingContext2D
+          const { width, height } = canvas
 
-          if (!imageDataRef.current) {
-            throw new Error('"imageDataRef" value is not set at render request')
-          }
-
-          imageDataRef.current.data.set(pixels)
-          ctx2dRef.current.putImageData(imageDataRef.current, 0, 0)
+          const imageData = new ImageData(pixels, width, height)
+          context2d.putImageData(imageData, 0, 0)
 
           setRenderInProgress(false)
 
@@ -52,13 +45,12 @@ export const RenderAction = () => {
     setRenderInProgress(true)
 
     const canvas = canvasRef.current as HTMLCanvasElement
-    const { width, height } = canvas
-    ctx2dRef.current = canvas.getContext('2d') as CanvasRenderingContext2D
-    imageDataRef.current = ctx2dRef.current.getImageData(0, 0, width, height)
+    const { width, height } = canvas;
 
     const renderMessage: MessageRender = {
       type: MessageType.render,
-      imageData: imageDataRef.current,
+      width,
+      height,
       iterationsCount: 50,
     }
 

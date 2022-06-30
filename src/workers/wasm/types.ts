@@ -10,7 +10,8 @@ export type MessageReady = {
 
 export type MessageRender = {
   type: MessageType.render
-  imageData: ImageData
+  width: number,
+  height: number,
   iterationsCount: number
 }
 

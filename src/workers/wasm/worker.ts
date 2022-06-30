@@ -18,8 +18,7 @@ import {
   ctx.onmessage = (event) => {
     switch(event.data.type) {
       case MessageType.render:
-        const { iterationsCount, imageData } = event.data
-        const { width, height } = imageData
+        const { iterationsCount, width, height } = event.data
         const pixels = new Uint8ClampedArray(buffer, pointer, width * height * 4)
 
         wasm.fillColor(
