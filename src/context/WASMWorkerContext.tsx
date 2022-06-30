@@ -17,7 +17,7 @@ export const WASMWorkerContextProvider: React.FC<WASMWorkerContextProviderProps>
   const [context, setContext] = React.useState<WASMWorkerContext>(defaultValue)
 
   React.useEffect(() => {
-    const worker = new Worker(new URL('../workers/wasm/worker', import.meta.url)) as WASMWorker
+    const worker = new Worker(new URL('../workers/wasm', import.meta.url)) as WASMWorker
 
     worker.onmessage = (event) => {
       switch (event.data.type) {
