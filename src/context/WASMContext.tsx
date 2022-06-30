@@ -2,20 +2,20 @@ import React from 'react'
 import { WASMWorkerMessageType } from '../workers/wasm/types'
 import type { WASMWorker } from '../workers/wasm/types'
 
-type WASMWorkerContext = WASMWorker | null
+type WASMContext = WASMWorker | null
 
-interface WASMWorkerContextProviderProps {
+interface WASMContextProviderProps {
   children: React.ReactNode
 }
 
-const defaultValue: WASMWorkerContext = null
+const defaultValue: WASMContext = null
 
-export const WASMWorkerContext = React.createContext<WASMWorkerContext>(defaultValue)
+export const WASMContext = React.createContext<WASMContext>(defaultValue)
 
-export const WASMWorkerContextProvider: React.FC<WASMWorkerContextProviderProps> = ({
+export const WASMContextProvider: React.FC<WASMContextProviderProps> = ({
   children
 }) => {
-  const [context, setContext] = React.useState<WASMWorkerContext>(defaultValue)
+  const [context, setContext] = React.useState<WASMContext>(defaultValue)
 
   React.useEffect(() => {
     const worker = new Worker(new URL('../workers/wasm', import.meta.url)) as WASMWorker
@@ -30,8 +30,8 @@ export const WASMWorkerContextProvider: React.FC<WASMWorkerContextProviderProps>
   }, [])
 
   return (
-    <WASMWorkerContext.Provider value={context}>
+    <WASMContext.Provider value={context}>
       {children}
-    </WASMWorkerContext.Provider>
+    </WASMContext.Provider>
   )
 }

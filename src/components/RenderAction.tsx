@@ -1,13 +1,13 @@
 import React from 'react'
 import { CanvasContext } from '../context/CanvasContext'
-import { WASMWorkerContext } from '../context/WASMWorkerContext'
+import { WASMContext } from '../context/WASMContext'
 import { WASMWorkerMessageType } from '../workers/wasm/types'
 import type { WASMWorkerRenderMessage } from '../workers/wasm/types'
 import { Button } from './Button'
 
 export const RenderAction = () => {
   const canvasRef = React.useContext(CanvasContext)
-  const worker = React.useContext(WASMWorkerContext)
+  const worker = React.useContext(WASMContext)
 
   const [renderInProgress, setRenderInProgress] = React.useState<boolean>(false)
 
