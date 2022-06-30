@@ -9,12 +9,10 @@ export const Options = () => {
     <div className='absolute inset-4 flex flex-col justify-between'>
       <div className='flex flex-col'>
         <h2 className='mb-8 text-xl'>Options</h2>
-        <label
-          htmlFor='iterations'
-          className='text-sm text-neutral-300'
-        >
-          Iterations
-        </label>
+        <div className='flex justify-between'>
+          <label htmlFor='iterations' className='text-sm text-neutral-300'>Iterations</label>
+          <span className='text-sm text-neutral-300'>{iterations}</span>
+        </div>
         <Range
           id='iterations'
           min={10}
