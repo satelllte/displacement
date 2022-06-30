@@ -1,6 +1,8 @@
 import React from 'react'
+import { WASMWorkerMessageType } from '../workers/wasm/types'
+import type { WASMWorker } from '../workers/wasm/types'
 
-type WASMContext = WASM | null
+type WASMContext = WASMWorker | null
 
 interface WASMContextProviderProps {
   children: React.ReactNode
@@ -13,17 +15,22 @@ export const WASMContext = React.createContext<WASMContext>(defaultValue)
 export const WASMContextProvider: React.FC<WASMContextProviderProps> = ({
   children
 }) => {
-  const [wasm, setWasm] = React.useState<WASMContext>(null)
+  const [context, setContext] = React.useState<WASMContext>(defaultValue)
 
   React.useEffect(() => {
-    (async() => {
-      const wasm = await import('wasm/wasm_bg.wasm')
-      setWasm(wasm)
-    })()
+    const worker: WASMWorker = new Worker(new URL('../workers/wasm', import.meta.url))
+
+    worker.onmessage = (event) => {
+      switch (event.data.type) {
+        case WASMWorkerMessageType.ready:
+          setContext(worker)
+          break
+      }
+    }
   }, [])
 
   return (
-    <WASMContext.Provider value={wasm}>
+    <WASMContext.Provider value={context}>
       {children}
     </WASMContext.Provider>
   )

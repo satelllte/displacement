@@ -1,9 +1,9 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import { WASMContextProvider } from '../context/WASMContext'
 import { APP_NAME } from '../constants'
 import { CanvasContextProvider } from '../context/CanvasContext'
+import { WASMContextProvider } from '../context/WASMContext'
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (

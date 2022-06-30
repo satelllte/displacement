@@ -18,7 +18,7 @@ export const Canvas = () => {
   return (
     <div className='absolute inset-4 overflow-y-auto'>
       <div className='absolute inset-0 flex justify-center items-center'>
-        <div className='relative flex items-center w-full h-full max-w-[500px] max-h-[500px]'>
+        <div className='relative flex items-center justify-center w-full h-full max-w-[500px] max-h-[500px]'>
           <canvas
             width={DEFAULT_WIDTH}
             height={DEFAULT_HEIGHT}
