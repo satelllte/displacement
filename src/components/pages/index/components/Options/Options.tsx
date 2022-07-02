@@ -1,7 +1,7 @@
 import React from 'react'
-import { backgroundBrightnessState, iterationsState } from '../state'
-import { Option } from './Option'
-import { RenderAction } from './RenderAction'
+import { backgroundBrightnessState, iterationsState } from '@/state'
+import { Option } from './components/Option'
+import { RenderAction } from './components/RenderAction'
 
 export const Options = () => {
   return (

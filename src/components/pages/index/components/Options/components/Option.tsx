@@ -1,6 +1,6 @@
 import type { RecoilState } from 'recoil'
 import { useRecoilState } from 'recoil'
-import { Range } from './Range'
+import { Range } from '@/components/ui/Range'
 
 interface OptionProps {
   id: string
