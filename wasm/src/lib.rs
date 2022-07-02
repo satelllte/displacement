@@ -14,8 +14,8 @@ pub fn get_buffer_pointer() -> *const u8 {
     pointer
 }
 
-#[wasm_bindgen(js_name = fillColor)]
-pub fn fill_color(r: u8, g: u8, b: u8, width: usize, height: usize) {
+#[wasm_bindgen(js_name = fill)]
+pub fn fill(r: u8, g: u8, b: u8, width: usize, height: usize) {
     for i in (0..width * height * 4).step_by(4) {
         unsafe {
             BUFFER[i] = r;

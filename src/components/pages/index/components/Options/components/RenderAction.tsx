@@ -1,11 +1,11 @@
 import React from 'react'
 import { useRecoilCallback } from 'recoil'
-import { iterationsState } from '../state'
-import { CanvasContext } from '../context/CanvasContext'
-import { WASMContext } from '../context/WASMContext'
-import { WASMWorkerMessageType } from '../workers/wasm/types'
-import type { WASMWorkerRenderMessage } from '../workers/wasm/types'
-import { Button } from './Button'
+import { backgroundBrightnessState, iterationsState } from '@/state'
+import { CanvasContext } from '@/context/CanvasContext'
+import { WASMContext } from '@/context/WASMContext'
+import { WASMWorkerMessageType } from '@/workers/wasm/types'
+import type { WASMWorkerRenderMessage } from '@/workers/wasm/types'
+import { Button } from '@/components/ui/Button'
 
 export const RenderAction = () => {
   const canvasRef = React.useContext(CanvasContext)
@@ -47,6 +47,7 @@ export const RenderAction = () => {
     setRenderInProgress(true)
     
     const iterations = await snapshot.getPromise(iterationsState)
+    const backgroundBrightness = await snapshot.getPromise(backgroundBrightnessState)
 
     const canvas = canvasRef.current as HTMLCanvasElement
     const { width, height } = canvas
@@ -56,6 +57,7 @@ export const RenderAction = () => {
       width,
       height,
       iterations,
+      backgroundBrightness,
     }
 
     worker.postMessage(renderMessage)

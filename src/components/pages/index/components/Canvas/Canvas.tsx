@@ -1,6 +1,6 @@
 import React from 'react'
-import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from '../constants'
-import { CanvasContext } from '../context/CanvasContext'
+import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from '@/constants'
+import { CanvasContext } from '@/context/CanvasContext'
 
 export const Canvas = () => {
   const canvasRef = React.useContext(CanvasContext)

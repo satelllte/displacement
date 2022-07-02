@@ -12,7 +12,8 @@ export type WASMWorkerRenderMessage = {
   type: WASMWorkerMessageType.render
   width: number,
   height: number,
-  iterations: number
+  iterations: number,
+  backgroundBrightness: number,
 }
 
 export type WASMWorkerRenderCompletedMessage = {
