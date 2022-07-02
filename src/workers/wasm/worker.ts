@@ -26,7 +26,7 @@ declare var self: IDedicatedWorkerGlobalScope<WASMWorkerMessage>
 
         const pixels = new Uint8ClampedArray(buffer, pointer, width * height * 4)
 
-        wasm.fillColor(
+        wasm.fill(
           backgroundBrightness,
           backgroundBrightness,
           backgroundBrightness,
