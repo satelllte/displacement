@@ -17,13 +17,19 @@ declare var self: IDedicatedWorkerGlobalScope<WASMWorkerMessage>
   self.onmessage = (event) => {
     switch(event.data.type) {
       case WASMWorkerMessageType.render:
-        const { iterations, width, height } = event.data
+        const {
+          width,
+          height,
+          iterations,
+          backgroundBrightness,
+        } = event.data
+
         const pixels = new Uint8ClampedArray(buffer, pointer, width * height * 4)
 
         wasm.fillColor(
-          randomInt(0x00, 0x99),
-          randomInt(0x00, 0x99),
-          randomInt(0x00, 0x99),
+          backgroundBrightness,
+          backgroundBrightness,
+          backgroundBrightness,
           width,
           height,
         )
