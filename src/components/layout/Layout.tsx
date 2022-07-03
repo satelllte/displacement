@@ -10,7 +10,7 @@ export const Layout: React.FC<LayoutProps> = ({
 }) => {
   return (
     <>
-      <Header/>
+      <Header />
       {children}
     </>
   )

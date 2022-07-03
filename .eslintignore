@@ -1,0 +1,9 @@
+next.config.js
+tailwind.config.js
+postcss.config.js
+.next/*
+netlify/*
+node_modules/*
+out/*
+public/*
+wasm/*
