@@ -1,3 +1,3 @@
-import Home from '.'
+import Index from '.'
 
-export default Home
+export default Index
