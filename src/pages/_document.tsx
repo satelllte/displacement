@@ -16,6 +16,8 @@ const Document = () => {
         <meta name='theme-color' content='#000000' />
         <link rel="icon" href="/favicon.ico" />
         <link rel='manifest' href='/manifest.json' crossOrigin='use-credentials' />
+        {/* eslint-disable-next-line @next/next/google-font-display */}
+        <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=block' />
       </Head>
       <body className='bg-black text-white'>
         <Main />
