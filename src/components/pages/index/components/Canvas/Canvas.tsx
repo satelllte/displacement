@@ -10,7 +10,7 @@ export const Canvas = () => {
 
     const width = DEFAULT_WIDTH
     const height = DEFAULT_HEIGHT
-    
+
     canvas.width = width
     canvas.height = height
   }, [canvasRef])

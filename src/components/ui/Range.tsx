@@ -15,18 +15,17 @@ interface RangeProps extends Omit<
 export const Range = React.forwardRef<HTMLInputElement, RangeProps>(({
   min,
   max,
-  step = 1,
+  step,
   value,
   onValueChange,
   onChange,
   ...rest
 }, ref) => {
-
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const { value } = e.target
+    const { value: targetValue } = e.target
 
     if (onValueChange) {
-      onValueChange(Number(value))
+      onValueChange(Number(targetValue))
     }
 
     if (onChange) {
@@ -47,5 +46,10 @@ export const Range = React.forwardRef<HTMLInputElement, RangeProps>(({
     />
   )
 })
+
+Range.defaultProps = {
+  step: 1,
+  onValueChange: undefined,
+}
 
 Range.displayName = 'Range'

@@ -23,7 +23,7 @@ export const Options = () => {
           state={backgroundBrightnessState}
         />
       </div>
-      <RenderAction/>
+      <RenderAction />
     </div>
   )
 }

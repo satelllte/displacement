@@ -6,16 +6,16 @@ import type {
   WASMWorkerRenderCompletedMessage,
 } from './types'
 
-declare var self: IDedicatedWorkerGlobalScope<WASMWorkerMessage>
+declare const self: IDedicatedWorkerGlobalScope<WASMWorkerMessage>
 
-(async() => {
+(async () => {
   const wasm = await import('wasm/wasm_bg.wasm')
 
   const pointer = wasm.getBufferPointer()
-  const buffer = wasm.memory.buffer
+  const { buffer } = wasm.memory
 
   self.onmessage = (event) => {
-    switch(event.data.type) {
+    switch (event.data.type) {
       case WASMWorkerMessageType.render:
         const {
           width,
@@ -63,7 +63,7 @@ declare var self: IDedicatedWorkerGlobalScope<WASMWorkerMessage>
   }
 
   const readyMessage: WASMWorkerReadyMessage = {
-    type: WASMWorkerMessageType.ready
+    type: WASMWorkerMessageType.ready,
   }
 
   self.postMessage(readyMessage)

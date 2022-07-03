@@ -1,3 +1,4 @@
+import React from 'react'
 import type { RecoilState } from 'recoil'
 import { useRecoilState } from 'recoil'
 import { Range } from '@/components/ui/Range'

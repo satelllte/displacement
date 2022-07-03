@@ -6,8 +6,8 @@ import { Options } from './components/Options'
 export const Index: NextPage = () => {
   return (
     <LayoutDoubleSectioned
-      section1={<Canvas/>}  
-      section2={<Options/>}  
+      section1={<Canvas />}
+      section2={<Options />}
     />
   )
 }

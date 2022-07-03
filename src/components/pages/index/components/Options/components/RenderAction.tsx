@@ -43,9 +43,9 @@ export const RenderAction = () => {
     if (!worker) {
       throw new Error('worker is not ready yet')
     }
-    
+
     setRenderInProgress(true)
-    
+
     const iterations = await snapshot.getPromise(iterationsState)
     const backgroundBrightness = await snapshot.getPromise(backgroundBrightnessState)
 
