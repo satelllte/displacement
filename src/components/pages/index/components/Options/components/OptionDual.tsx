@@ -1,6 +1,7 @@
 import type { RecoilState } from 'recoil'
 import { useRecoilState } from 'recoil'
 import { Range } from '@/components/ui/Range'
+import { OptionHeading } from './components/OptionHeading'
 
 interface OptionDualProps {
   id: string
@@ -38,10 +39,7 @@ export const OptionDual: React.FC<OptionDualProps> = ({
 
   return (
     <>
-      <div className='flex justify-between'>
-        <label className='text-sm text-neutral-300'>{label}</label>
-        <span className='text-sm text-neutral-300'>{`${valueMin} - ${valueMax}`}</span>
-      </div>
+      <OptionHeading label={label} displayValue={`${valueMin} - ${valueMax}`} />
       <Range
         id={`${id}-min`}
         min={min}
