@@ -40,7 +40,7 @@ export const Options = () => {
         />
         <OptionDual
           id='rectAlpha'
-          label='Rect:Alpha (does not work yet)'
+          label='Rect:Alpha'
           min={0x00}
           max={0xFF}
           stateMin={rectAlphaMinState}
