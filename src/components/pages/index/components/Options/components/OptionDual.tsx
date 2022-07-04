@@ -31,9 +31,9 @@ export const OptionDual: React.FC<OptionDualProps> = ({
   }
 
   return (
-    <fieldset>
+    <>
       <div className='flex justify-between'>
-        <legend className='text-sm text-neutral-300'>{label}</legend>
+        <label className='text-sm text-neutral-300'>{label}</label>
         <span className='text-sm text-neutral-300'>{`${valueMin} - ${valueMax}`}</span>
       </div>
       <Range
@@ -50,6 +50,6 @@ export const OptionDual: React.FC<OptionDualProps> = ({
         value={valueMax}
         onValueChange={onValueMaxChange}
       />
-    </fieldset>
+    </>
   )
 }
