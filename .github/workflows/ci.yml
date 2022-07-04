@@ -65,6 +65,8 @@ jobs:
       run: npm ci
     - name: Build WebAssembly
       run: npm run build:wasm
+    - name: Unit tests
+      run: npm run test:units
     - name: Validate types
       run: npm run test:typescript
     - name: Code linting
