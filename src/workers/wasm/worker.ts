@@ -22,6 +22,8 @@ declare var self: IDedicatedWorkerGlobalScope<WASMWorkerMessage>
           height,
           iterations,
           backgroundBrightness,
+          rectBrightnessMin,
+          rectBrightnessMax,
         } = event.data
 
         const pixels = new Uint8ClampedArray(buffer, pointer, width * height * 4)
@@ -37,12 +39,13 @@ declare var self: IDedicatedWorkerGlobalScope<WASMWorkerMessage>
         for (let i = 0; i < iterations; i++) {
           const x0 = randomInt(0, width - 1)
           const y0 = randomInt(0, height - 1)
-          const x1 = Math.min(x0 + randomInt(10, 100), width - 1)
-          const y1 = Math.min(y0 + randomInt(10, 100), height - 1)
+          const x1 = Math.min(x0 + randomInt(100, 750), width - 1)
+          const y1 = Math.min(y0 + randomInt(100, 750), height - 1)
+          const brightness = randomInt(rectBrightnessMin, rectBrightnessMax)
           wasm.fillRect(
-            randomInt(0x00, 0x99),
-            randomInt(0x00, 0x99),
-            randomInt(0x00, 0x99),
+            brightness,
+            brightness,
+            brightness,
             x0,
             y0,
             x1,

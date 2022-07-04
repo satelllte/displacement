@@ -32,7 +32,7 @@ export const Options = () => {
         />
         <OptionDual
           id='rectBrightness'
-          label='Rect:Background (does not work yet)'
+          label='Rect:Background'
           min={0x00}
           max={0xFF}
           stateMin={rectBrightnessMinState}

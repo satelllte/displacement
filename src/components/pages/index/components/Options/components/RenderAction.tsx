@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRecoilCallback } from 'recoil'
-import { backgroundBrightnessState, iterationsState } from '@/state'
+import { backgroundBrightnessState, iterationsState, rectBrightnessMaxState, rectBrightnessMinState } from '@/state'
 import { CanvasContext } from '@/context/CanvasContext'
 import { WASMContext } from '@/context/WASMContext'
 import { WASMWorkerMessageType } from '@/workers/wasm/types'
@@ -48,6 +48,8 @@ export const RenderAction = () => {
     
     const iterations = await snapshot.getPromise(iterationsState)
     const backgroundBrightness = await snapshot.getPromise(backgroundBrightnessState)
+    const rectBrightnessMin = await snapshot.getPromise(rectBrightnessMinState)
+    const rectBrightnessMax = await snapshot.getPromise(rectBrightnessMaxState)
 
     const canvas = canvasRef.current as HTMLCanvasElement
     const { width, height } = canvas
@@ -58,6 +60,8 @@ export const RenderAction = () => {
       height,
       iterations,
       backgroundBrightness,
+      rectBrightnessMin,
+      rectBrightnessMax,
     }
 
     worker.postMessage(renderMessage)

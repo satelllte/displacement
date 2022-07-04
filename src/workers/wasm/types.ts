@@ -14,6 +14,8 @@ export type WASMWorkerRenderMessage = {
   height: number,
   iterations: number,
   backgroundBrightness: number,
+  rectBrightnessMin: number,
+  rectBrightnessMax: number,
 }
 
 export type WASMWorkerRenderCompletedMessage = {
