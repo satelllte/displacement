@@ -1,6 +1,6 @@
 import { randomInt } from '@/utils/random'
 import { randRectPosition } from './utils/randRectPosition'
-import { WASMWorkerMessageType } from './types'
+import { WASMWorkerMessageType, WASMWorkerRenderProgressMessage } from './types'
 import type {
   WASMWorkerMessage,
   WASMWorkerReadyMessage,
@@ -54,6 +54,13 @@ declare var self: IDedicatedWorkerGlobalScope<WASMWorkerMessage>
             y1,
             width,
           )
+          
+          const renderProgressMessage: WASMWorkerRenderProgressMessage = {
+            type: WASMWorkerMessageType.renderProgress,
+            percent: (i / iterations) * 100,
+          }
+
+          self.postMessage(renderProgressMessage)
         }
 
         const renderCompletedMessage: WASMWorkerRenderCompletedMessage = {

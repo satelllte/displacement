@@ -1,6 +1,7 @@
 export enum WASMWorkerMessageType {
   ready = 'ready',
   render = 'render',
+  renderProgress = 'renderProgress',
   renderCompleted = 'renderCompleted',
 }
 
@@ -20,6 +21,11 @@ export type WASMWorkerRenderMessage = {
   rectAlphaMax: number,
 }
 
+export type WASMWorkerRenderProgressMessage = {
+  type: WASMWorkerMessageType.renderProgress
+  percent: number
+}
+
 export type WASMWorkerRenderCompletedMessage = {
   type: WASMWorkerMessageType.renderCompleted
   pixels: Uint8ClampedArray
@@ -28,6 +34,7 @@ export type WASMWorkerRenderCompletedMessage = {
 export type WASMWorkerMessage =
   | WASMWorkerReadyMessage
   | WASMWorkerRenderMessage
+  | WASMWorkerRenderProgressMessage
   | WASMWorkerRenderCompletedMessage
 
 export interface WASMWorker extends IWorker<WASMWorkerMessage> {}

@@ -42,6 +42,13 @@ export const RenderAction = () => {
           setRenderInProgress(false)
 
           break
+        
+        case WASMWorkerMessageType.renderProgress:
+          const { percent } = event.data
+
+          console.info(`render | progress: ${percent}%`)
+
+          break
       }
     }
   }, [worker, canvasRef])
