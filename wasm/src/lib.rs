@@ -29,8 +29,8 @@ pub fn fill(r: u8, g: u8, b: u8, width: usize, height: usize) {
 #[wasm_bindgen(js_name = fillRect)]
 #[allow(clippy::too_many_arguments)]
 pub fn fill_rect(r: u8, g: u8, b: u8, x0: usize, y0: usize, x1: usize, y1: usize, width: usize) {
-    for xi in x0..x1 {
-        for yi in y0..y1 {
+    for xi in x0..=x1 {
+        for yi in y0..=y1 {
             let pos = 4 * (yi * width + xi);
             unsafe {
                 BUFFER[pos] = r;
