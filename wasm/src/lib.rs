@@ -28,14 +28,27 @@ pub fn fill(r: u8, g: u8, b: u8, width: usize, height: usize) {
 
 #[wasm_bindgen(js_name = fillRect)]
 #[allow(clippy::too_many_arguments)]
-pub fn fill_rect(r: u8, g: u8, b: u8, x0: usize, y0: usize, x1: usize, y1: usize, width: usize) {
+#[rustfmt::skip]
+pub fn fill_rect(
+    r: u8,
+    g: u8,
+    b: u8,
+    alpha: u8,
+    x0: usize,
+    y0: usize,
+    x1: usize,
+    y1: usize,
+    width: usize,
+) {
+    let alpha_factor: f32 = alpha as f32 / 255.0;
     for xi in x0..=x1 {
         for yi in y0..=y1 {
             let pos = 4 * (yi * width + xi);
             unsafe {
-                BUFFER[pos] = r;
-                BUFFER[pos + 1] = g;
-                BUFFER[pos + 2] = b;
+                // mix(color1, color2, alpha) = color1 * (1 - alpha) + color2 * alpha
+                BUFFER[pos    ] = (BUFFER[pos    ] as f32 * (1.0 - alpha_factor) + r as f32 * alpha_factor).round() as u8;
+                BUFFER[pos + 1] = (BUFFER[pos + 1] as f32 * (1.0 - alpha_factor) + g as f32 * alpha_factor).round() as u8;
+                BUFFER[pos + 2] = (BUFFER[pos + 2] as f32 * (1.0 - alpha_factor) + b as f32 * alpha_factor).round() as u8;
                 BUFFER[pos + 3] = 0xff;
             }
         }
