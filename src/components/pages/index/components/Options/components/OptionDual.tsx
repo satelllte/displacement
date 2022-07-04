@@ -23,11 +23,17 @@ export const OptionDual: React.FC<OptionDualProps> = ({
   const [valueMax, setValueMax] = useRecoilState(stateMax)
 
   const onValueMinChange = (value: number) => {
-    setValueMin(Math.min(value, valueMax))
+    setValueMin(value)
+    if (value > valueMax) {
+      setValueMax(value)
+    }
   }
   
   const onValueMaxChange = (value: number) => {
-    setValueMax(Math.max(value, valueMin))
+    setValueMax(value)
+    if (value < valueMin) {
+      setValueMin(value)
+    }
   }
 
   return (
