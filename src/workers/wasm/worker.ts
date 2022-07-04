@@ -1,4 +1,5 @@
-import { randomInt } from '../../utils/random'
+import { randomInt } from '@/utils/random'
+import { randRectPosition } from './utils/randRectPosition'
 import { WASMWorkerMessageType } from './types'
 import type {
   WASMWorkerMessage,
@@ -37,11 +38,8 @@ declare var self: IDedicatedWorkerGlobalScope<WASMWorkerMessage>
         )
 
         for (let i = 0; i < iterations; i++) {
-          const x0 = randomInt(0, width - 1)
-          const y0 = randomInt(0, height - 1)
-          const x1 = Math.min(x0 + randomInt(100, 750), width - 1)
-          const y1 = Math.min(y0 + randomInt(100, 750), height - 1)
           const brightness = randomInt(rectBrightnessMin, rectBrightnessMax)
+          const { x0, y0, x1, y1 } = randRectPosition(width, height)
           wasm.fillRect(
             brightness,
             brightness,
