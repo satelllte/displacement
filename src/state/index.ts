@@ -8,7 +8,7 @@ export const backgroundBrightnessState = atom<number>({
 
 export const iterationsState = atom<number>({
   key: RECOIL_KEYS.iterations,
-  default: 500,
+  default: 250,
 })
 
 export const rectBrightnessMinState = atom<number>({
