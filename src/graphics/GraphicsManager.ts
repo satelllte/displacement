@@ -25,13 +25,17 @@ uniform float u_seed_3;
 
 out vec4 fragColor;
 
-float rand(vec2 uv){
+float rand_1(vec2 uv) {
   return fract(sin(dot(uv,vec2(10.9898 + 2.0 * u_seed_1, 58.233 + 20.0 * u_seed_2))) * 43758.5453123 + u_seed_3);
+}
+
+float rand_2(vec2 uv) {
+  return fract(sin(dot(uv,vec2(8.38223 + 4.0 * u_seed_1, 45.954 + 31.0 * u_seed_2))) * 72734.3267832 + u_seed_3);
 }
 
 void main() {
   vec2 point = gl_FragCoord.xy / u_resolution;
-  fragColor = vec4(rand(point), 0.0, 0.0, 1.0);
+  fragColor = vec4(0.5 * rand_1(vec2(point.y, u_seed_2)), 0.0, 0.0, 1.0);
 }
 `
 
