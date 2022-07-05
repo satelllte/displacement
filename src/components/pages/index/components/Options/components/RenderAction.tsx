@@ -14,6 +14,7 @@ import { WASMContext } from '@/context/WASMContext'
 import { WASMWorkerMessageType } from '@/workers/wasm/types'
 import type { WASMWorkerRenderMessage } from '@/workers/wasm/types'
 import { Button } from '@/components/ui/Button'
+import { GLManager } from './drafts/GLManager'
 
 export const RenderAction = () => {
   const canvasRef = React.useContext(CanvasContext)
@@ -91,33 +92,17 @@ export const RenderAction = () => {
   React.useEffect(() => {
     const canvas = canvasRef.current as HTMLCanvasElement
 
-    const { width, height } = canvas
+    const glCtx = canvas.getContext('webgl2', { powerPreference: 'high-performance' } as WebGLContextAttributes)
 
-    const ctx = canvas.getContext('webgl2', { powerPreference: 'high-performance' } as WebGLContextAttributes)
-
-    if (!ctx) {
+    if (!glCtx) {
       throw new Error('WebGL2 is not supported')
     }
 
-    graphicsManagerRef.current = new GraphicsManager(ctx, width, height)
+    console.info('webgl2 | glCtx: ', glCtx)
+
+    const glManager = new GLManager(glCtx)
+
   }, [canvasRef])
-
-  const renderShader = async () => {
-    if (!graphicsManagerRef.current) {
-      return
-    }
-
-    setRenderInProgress(true)
-
-    const { renderTime } = await graphicsManagerRef.current.draw()
-
-    if (renderTime < 500) {
-      // when GPU render is very fast, give minimum of 0.5s between state changes to prevent UI flickers
-      setTimeout(() => setRenderInProgress(false), 500)
-    } else {
-      setRenderInProgress(false)
-    }
-  }
 
   return (
     <Button disabled={disabled} onClick={renderShader}>
