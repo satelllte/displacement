@@ -3,6 +3,7 @@ import {
   U_SEED_1,
   U_SEED_2,
   U_SEED_3,
+  U_ITERATIONS,
 } from './uniforms'
 
 const vertexShaderSource = `#version 300 es
@@ -22,6 +23,7 @@ uniform vec2 u_resolution;
 uniform float u_seed_1;
 uniform float u_seed_2;
 uniform float u_seed_3;
+uniform int u_iterations;
 
 out vec4 fragColor;
 
@@ -29,13 +31,44 @@ float rand_1(vec2 uv) {
   return fract(sin(dot(uv,vec2(10.9898 + 2.0 * u_seed_1, 58.233 + 20.0 * u_seed_2))) * 43758.5453123 + u_seed_3);
 }
 
+float rand_1_extra_seed(vec2 uv, float seed) {
+  return fract(sin(dot(uv,vec2(10.9898 + 2.0 * u_seed_1, 58.233 + 20.0 * u_seed_2))) * 43758.5453123 + u_seed_3 * seed);
+}
+
 float rand_2(vec2 uv) {
   return fract(sin(dot(uv,vec2(8.38223 + 4.0 * u_seed_1, 45.954 + 31.0 * u_seed_2))) * 72734.3267832 + u_seed_3);
 }
 
+float rand_2_extra_seed(vec2 uv, float seed) {
+  return fract(sin(dot(uv,vec2(8.38223 + 4.0 * u_seed_1, 45.954 + 31.0 * u_seed_2))) * 72734.3267832 + u_seed_3 * seed);
+}
+
+vec4 rand_rect_position(float iteration) {
+  return vec4(
+    rand_1_extra_seed(vec2(u_seed_1 * iteration, u_seed_1 * iteration), u_seed_3 * iteration),
+    rand_2_extra_seed(vec2(u_seed_1 * iteration, u_seed_2 * iteration), u_seed_3 * iteration),
+    rand_1_extra_seed(vec2(u_seed_2 * iteration, u_seed_1 * iteration), -u_seed_3 * iteration),
+    rand_2_extra_seed(vec2(u_seed_2 * iteration, u_seed_2 * iteration), -u_seed_3 * iteration)
+  );
+}
+
 void main() {
   vec2 point = gl_FragCoord.xy / u_resolution;
-  fragColor = vec4(0.5 * rand_1(vec2(point.y, u_seed_2)), 0.0, 0.0, 1.0);
+  
+  fragColor = vec4(vec3(0.2), 1.0);
+
+  for (int i = 1; i <= u_iterations; i++) {
+    vec4 rect_position = rand_rect_position(float(i));
+
+    float x0 = rect_position[0];
+    float y0 = rect_position[1];
+    float x1 = rect_position[2];
+    float y1 = rect_position[3];
+
+    if (point.x >= x0 && point.x <= x1 && point.y >= y0 && point.y <= y1) {
+      fragColor = vec4(vec3(0.5), 1.0);
+    }
+  }
 }
 `
 
@@ -74,6 +107,7 @@ export class GraphicsManager {
     this.setUniform1f(U_SEED_1, Math.random())
     this.setUniform1f(U_SEED_2, Math.random())
     this.setUniform1f(U_SEED_3, Math.random())
+    this.setUniform1i(U_ITERATIONS, 10)
   }
 
   public async draw(): Promise<{
@@ -117,6 +151,11 @@ export class GraphicsManager {
   private setUniform1f(name: string, x: number) {
     const location = this.ctx.getUniformLocation(this.program, name) as WebGLUniformLocation
     this.ctx.uniform1f(location, x)
+  }
+
+  private setUniform1i(name: string, x: number) {
+    const location = this.ctx.getUniformLocation(this.program, name) as WebGLUniformLocation
+    this.ctx.uniform1i(location, x)
   }
 
   private createShader(type: number, source: string): WebGLShader {
