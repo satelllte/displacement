@@ -1,3 +1,5 @@
+import { U_RESOLUTION } from './uniforms'
+
 const vertexShaderSource = `#version 300 es
 
 in vec2 position;
@@ -11,10 +13,13 @@ const fragmentShaderSource = `#version 300 es
 
 precision highp float;
 
+uniform vec2 u_resolution;
+
 out vec4 fragColor;
 
 void main() {
-  fragColor = vec4(0, .2, 0, 1);
+  vec2 point = gl_FragCoord.xy / u_resolution;
+  fragColor = vec4(1.0 - point.x, 0.0, point.y * point.x, 1.0);
 }
 `
 
@@ -32,7 +37,7 @@ export class GLManager {
   ])
   private positionLocation: GLint
 
-  constructor(ctx: WebGL2RenderingContext) {
+  constructor(ctx: WebGL2RenderingContext, width: number, height: number) {
     this.ctx = ctx
 
     this.vertexShader = this.createShader(this.ctx.VERTEX_SHADER, vertexShaderSource)
@@ -48,6 +53,8 @@ export class GLManager {
     this.positionLocation = this.ctx.getAttribLocation(this.program, 'position')
     this.ctx.enableVertexAttribArray(this.positionLocation)
     this.ctx.vertexAttribPointer(this.positionLocation, 2, this.ctx.FLOAT, false, this.vertexData.length, 0)
+    
+    this.setUniform2f(U_RESOLUTION, width, height)
   }
 
   public async draw() {
@@ -71,6 +78,11 @@ export class GLManager {
 
     const renderTime = performance.now() - timeStart
     console.info(`render time: ${renderTime}ms`)
+  }
+
+  private setUniform2f(name: string, x: number, y: number) {
+    const location = this.ctx.getUniformLocation(this.program, name) as WebGLUniformLocation
+    this.ctx.uniform2fv(location, [x, y])
   }
 
   private createShader(type: number, source: string): WebGLShader {

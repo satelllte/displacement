@@ -92,6 +92,8 @@ export const RenderAction = () => {
   React.useEffect(() => {
     const canvas = canvasRef.current as HTMLCanvasElement
 
+    const { width, height } = canvas
+
     const ctx = canvas.getContext('webgl2', { powerPreference: 'high-performance' } as WebGLContextAttributes)
 
     if (!ctx) {
@@ -100,7 +102,7 @@ export const RenderAction = () => {
 
     console.info('webgl2 | ctx: ', ctx)
 
-    glManagerRef.current = new GLManager(ctx)
+    glManagerRef.current = new GLManager(ctx, width, height)
   }, [canvasRef])
 
   const renderShader = async () => {
