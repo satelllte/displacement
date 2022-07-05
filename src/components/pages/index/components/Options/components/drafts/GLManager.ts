@@ -23,40 +23,34 @@ export class GLManager {
   private vertexShader: WebGLShader
   private fragmentShader: WebGLShader
   private program: WebGLProgram
-  private vertexData = new Float32Array([
+  private vertexDataBuffer: WebGLBuffer
+  private vertexData: Float32Array = new Float32Array([
     -1.0,  1.0, // top left
     -1.0, -1.0, // bottom left
      1.0,  1.0, // top right
      1.0, -1.0, // bottom right
   ])
+  private positionLocation: GLint
 
   constructor(gl: WebGL2RenderingContext) {
     this.gl = gl
 
     this.vertexShader = this.createShader(this.gl.VERTEX_SHADER, vertexShaderSource)
-    
     this.fragmentShader = this.createShader(this.gl.FRAGMENT_SHADER, fragmentShaderSource)
     
     this.program = this.createProgram()
-
     this.gl.useProgram(this.program)
+
+    this.vertexDataBuffer = this.gl.createBuffer() as WebGLBuffer
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexDataBuffer)
+    this.gl.bufferData(this.gl.ARRAY_BUFFER, this.vertexData, this.gl.STATIC_DRAW)
+
+    this.positionLocation = this.gl.getAttribLocation(this.program, 'position')
+    this.gl.enableVertexAttribArray(this.positionLocation)
+    this.gl.vertexAttribPointer(this.positionLocation, 2, this.gl.FLOAT, false, this.vertexData.length, 0)
   }
 
   public async draw() {
-    const vertexDataBuffer = this.gl.createBuffer()
-
-    if (!vertexDataBuffer) {
-      throw new Error('vertexDataBuffer creation failed')
-    }
-    
-    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, vertexDataBuffer)
-    this.gl.bufferData(this.gl.ARRAY_BUFFER, this.vertexData, this.gl.STATIC_DRAW)
-
-    const positionLocation = this.gl.getAttribLocation(this.program, 'position')
-
-    this.gl.enableVertexAttribArray(positionLocation)
-    this.gl.vertexAttribPointer(positionLocation, 2, this.gl.FLOAT, false, 2 * 4, 0)
-
     const sync = this.gl.fenceSync(this.gl.SYNC_GPU_COMMANDS_COMPLETE, 0)
 
     if (!sync) {
@@ -65,12 +59,15 @@ export class GLManager {
 
     const start = performance.now()
 
-    this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4)
+    this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, this.vertexData.length / 2)
+
     this.gl.flush()
 
-    while (this.gl.getSyncParameter(sync, this.gl.SYNC_STATUS) == this.gl.UNSIGNALED) {
+    while (this.gl.getSyncParameter(sync, this.gl.SYNC_STATUS) === this.gl.UNSIGNALED) {
       await new Promise(resolve => setTimeout(resolve, 1))
     }
+
+    this.gl.deleteSync(sync)
 
     const end = performance.now()
     const diff = end - start
