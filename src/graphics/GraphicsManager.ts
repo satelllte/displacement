@@ -72,7 +72,9 @@ export class GraphicsManager {
     this.setUniform1f(U_SEED_3, Math.random())
   }
 
-  public async draw() {
+  public async draw(): Promise<{
+    renderTime: number
+  }> {
     const timeStart = performance.now()
 
     this.setUniform1f(U_SEED_1, Math.random())
@@ -97,6 +99,10 @@ export class GraphicsManager {
 
     const renderTime = performance.now() - timeStart
     console.info(`render time: ${renderTime}ms`)
+
+    return {
+      renderTime,
+    }
   }
 
   private setUniform2f(name: string, x: number, y: number) {
