@@ -10,7 +10,7 @@ const fragmentShaderSource = `
 precision mediump float;
 
 void main() {
-  gl_FragColor = vec4(1, 0, 0.5, 1);
+  gl_FragColor = vec4(.5, 0, .15, 1);
 }
 `
 
@@ -31,6 +31,56 @@ export class GLManager {
     
     this.program = this.createProgram()
     console.info('this.program: ', this.program)
+
+    this.gl.useProgram(this.program)
+
+    const positionLocation = this.gl.getAttribLocation(this.program, 'position')
+
+    const buffer = this.gl.createBuffer()
+
+    if (!buffer) {
+      throw new Error('Buffer creation failed')
+    }
+    
+    this.gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+
+    this.gl.bufferData(
+      this.gl.ARRAY_BUFFER,
+      new Float32Array([
+        -1.0, -1.0,
+        1.0, -1.0,
+        -1.0,  1.0,
+        -1.0,  1.0,
+        1.0, -1.0,
+        1.0,  1.0]),
+      this.gl.STATIC_DRAW,
+    )
+
+    this.gl.enableVertexAttribArray(positionLocation)
+    this.gl.vertexAttribPointer(positionLocation, 2, this.gl.FLOAT, false, 0, 0)
+
+    const sync = this.gl.fenceSync(this.gl.SYNC_GPU_COMMANDS_COMPLETE, 0)
+
+    if (!sync) {
+      throw new Error('gl.fenceSync error')
+    }
+
+    console.info('this.gl.UNSIGNALED: ', this.gl.UNSIGNALED)
+
+    console.info('this.gl | syncParameter: ', this.gl.getSyncParameter(sync, this.gl.SYNC_STATUS))
+
+    const start = performance.now()
+
+    // draw
+    this.gl.drawArrays(this.gl.TRIANGLES, 0, 6)
+    this.gl.flush()
+
+    console.info('this.gl | syncParameter: ', this.gl.getSyncParameter(sync, this.gl.SYNC_STATUS))
+
+    const end = performance.now()
+    const diff = end - start
+
+    console.info(`render time: ${diff}ms`)
   }
 
   private createShader(type: number, source: string): WebGLShader {
