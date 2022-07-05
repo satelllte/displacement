@@ -92,15 +92,15 @@ export const RenderAction = () => {
   React.useEffect(() => {
     const canvas = canvasRef.current as HTMLCanvasElement
 
-    const glCtx = canvas.getContext('webgl2', { powerPreference: 'high-performance' } as WebGLContextAttributes)
+    const ctx = canvas.getContext('webgl2', { powerPreference: 'high-performance' } as WebGLContextAttributes)
 
-    if (!glCtx) {
+    if (!ctx) {
       throw new Error('WebGL2 is not supported')
     }
 
-    console.info('webgl2 | glCtx: ', glCtx)
+    console.info('webgl2 | ctx: ', ctx)
 
-    glManagerRef.current = new GLManager(glCtx)
+    glManagerRef.current = new GLManager(ctx)
   }, [canvasRef])
 
   const renderShader = async () => {
