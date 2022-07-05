@@ -14,13 +14,12 @@ import { WASMContext } from '@/context/WASMContext'
 import { WASMWorkerMessageType } from '@/workers/wasm/types'
 import type { WASMWorkerRenderMessage } from '@/workers/wasm/types'
 import { Button } from '@/components/ui/Button'
-import { GLManager } from './drafts/GLManager'
 
 export const RenderAction = () => {
   const canvasRef = React.useContext(CanvasContext)
   const worker = React.useContext(WASMContext)
 
-  const glManagerRef = React.useRef<GLManager>()
+  const graphicsManagerRef = React.useRef<GraphicsManager>()
 
   const [renderInProgress, setRenderInProgress] = React.useState<boolean>(false)
 
@@ -100,17 +99,19 @@ export const RenderAction = () => {
       throw new Error('WebGL2 is not supported')
     }
 
-    console.info('webgl2 | ctx: ', ctx)
-
-    glManagerRef.current = new GLManager(ctx, width, height)
+    graphicsManagerRef.current = new GraphicsManager(ctx, width, height)
   }, [canvasRef])
 
   const renderShader = async () => {
-    if (!glManagerRef.current) {
+    if (!graphicsManagerRef.current) {
       return
     }
 
-    await glManagerRef.current.draw()
+    setRenderInProgress(true)
+
+    await graphicsManagerRef.current.draw()
+
+    setRenderInProgress(false)
   }
 
   return (
