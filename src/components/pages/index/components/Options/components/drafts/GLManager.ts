@@ -23,6 +23,12 @@ export class GLManager {
   private vertexShader: WebGLShader
   private fragmentShader: WebGLShader
   private program: WebGLProgram
+  private vertexData = new Float32Array([
+    -1.0,  1.0, // top left
+    -1.0, -1.0, // bottom left
+     1.0,  1.0, // top right
+     1.0, -1.0, // bottom right
+  ])
 
   constructor(gl: WebGL2RenderingContext) {
     this.gl = gl
@@ -37,22 +43,17 @@ export class GLManager {
     console.info('this.program: ', this.program)
 
     this.gl.useProgram(this.program)
+  }
 
-    const vertexData = new Float32Array([
-      -1.0,  1.0, // top left
-      -1.0, -1.0, // bottom left
-       1.0,  1.0, // top right
-       1.0, -1.0, // bottom right
-    ])
-
+  public async draw() {
     const vertexDataBuffer = this.gl.createBuffer()
 
     if (!vertexDataBuffer) {
       throw new Error('vertexDataBuffer creation failed')
     }
     
-    this.gl.bindBuffer(gl.ARRAY_BUFFER, vertexDataBuffer)
-    this.gl.bufferData(this.gl.ARRAY_BUFFER, vertexData, this.gl.STATIC_DRAW)
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, vertexDataBuffer)
+    this.gl.bufferData(this.gl.ARRAY_BUFFER, this.vertexData, this.gl.STATIC_DRAW)
 
     const positionLocation = this.gl.getAttribLocation(this.program, 'position')
 
@@ -65,16 +66,14 @@ export class GLManager {
       throw new Error('gl.fenceSync error')
     }
 
-    console.info('this.gl.UNSIGNALED: ', this.gl.UNSIGNALED)
-
-    console.info('this.gl | syncParameter: ', this.gl.getSyncParameter(sync, this.gl.SYNC_STATUS))
-
     const start = performance.now()
 
     this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4)
     this.gl.flush()
 
-    console.info('this.gl | syncParameter: ', this.gl.getSyncParameter(sync, this.gl.SYNC_STATUS))
+    while (this.gl.getSyncParameter(sync, this.gl.SYNC_STATUS) == this.gl.UNSIGNALED) {
+      await new Promise(resolve => setTimeout(resolve, 1))
+    }
 
     const end = performance.now()
     const diff = end - start
