@@ -51,13 +51,13 @@ export class GLManager {
   }
 
   public async draw() {
+    const timeStart = performance.now()
+
     const sync = this.gl.fenceSync(this.gl.SYNC_GPU_COMMANDS_COMPLETE, 0)
 
     if (!sync) {
       throw new Error('gl.fenceSync error')
     }
-
-    const start = performance.now()
 
     this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, this.vertexData.length / 2)
 
@@ -69,10 +69,8 @@ export class GLManager {
 
     this.gl.deleteSync(sync)
 
-    const end = performance.now()
-    const diff = end - start
-
-    console.info(`render time: ${diff}ms`)
+    const renderTime = performance.now() - timeStart
+    console.info(`render time: ${renderTime}ms`)
   }
 
   private createShader(type: number, source: string): WebGLShader {
