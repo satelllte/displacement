@@ -19,6 +19,8 @@ export const RenderAction = () => {
   const canvasRef = React.useContext(CanvasContext)
   const worker = React.useContext(WASMContext)
 
+  const glManagerRef = React.useRef<GLManager>()
+
   const [renderInProgress, setRenderInProgress] = React.useState<boolean>(false)
 
   const disabled = !worker || renderInProgress
@@ -97,13 +99,19 @@ export const RenderAction = () => {
 
     console.info('webgl2 | glCtx: ', glCtx)
 
-    setTimeout(() => {
-      const glManager = new GLManager(glCtx)
-    }, 1000)
+    glManagerRef.current = new GLManager(glCtx)
   }, [canvasRef])
 
+  const renderShader = async () => {
+    if (!glManagerRef.current) {
+      return
+    }
+
+    await glManagerRef.current.draw()
+  }
+
   return (
-    <Button disabled={disabled} onClick={render}>
+    <Button disabled={disabled} onClick={renderShader}>
       Render
     </Button>
   )
