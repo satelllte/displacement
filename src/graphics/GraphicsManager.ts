@@ -23,7 +23,7 @@ void main() {
 }
 `
 
-export class GLManager {
+export class GraphicsManager {
   private ctx: WebGL2RenderingContext
   private vertexShader: WebGLShader
   private fragmentShader: WebGLShader
