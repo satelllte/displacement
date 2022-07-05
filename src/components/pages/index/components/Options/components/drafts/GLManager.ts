@@ -1,16 +1,25 @@
-const vertexShaderSource = `
-attribute vec4 position;
+const vertexShaderSource = `#version 300 es
+
+in vec4 position;
+
+out vec2 pos;
 
 void main() {
   gl_Position = position;
+  pos = position.xy;
 }
 `
 
-const fragmentShaderSource = `
-precision mediump float;
+const fragmentShaderSource = `#version 300 es
+
+precision highp float;
+
+in vec2 pos;
+
+out vec4 fragColor;
 
 void main() {
-  gl_FragColor = vec4(.5, 0, .15, 1);
+  fragColor = vec4(pos.x, 0, .15, 1);
 }
 `
 
