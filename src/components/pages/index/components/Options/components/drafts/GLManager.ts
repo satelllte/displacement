@@ -1,12 +1,9 @@
 const vertexShaderSource = `#version 300 es
 
-in vec4 position;
-
-out vec2 pos;
+in vec2 position;
 
 void main() {
-  gl_Position = position;
-  pos = position.xy;
+  gl_Position = vec4(position, 0.0, 1.0);
 }
 `
 
@@ -14,12 +11,10 @@ const fragmentShaderSource = `#version 300 es
 
 precision highp float;
 
-in vec2 pos;
-
 out vec4 fragColor;
 
 void main() {
-  fragColor = vec4(pos.x, 0, .15, 1);
+  fragColor = vec4(0, .2, 0, 1);
 }
 `
 
@@ -43,30 +38,26 @@ export class GLManager {
 
     this.gl.useProgram(this.program)
 
-    const positionLocation = this.gl.getAttribLocation(this.program, 'position')
+    const vertexData = new Float32Array([
+      -1.0,  1.0, // top left
+      -1.0, -1.0, // bottom left
+       1.0,  1.0, // top right
+       1.0, -1.0, // bottom right
+    ])
 
-    const buffer = this.gl.createBuffer()
+    const vertexDataBuffer = this.gl.createBuffer()
 
-    if (!buffer) {
-      throw new Error('Buffer creation failed')
+    if (!vertexDataBuffer) {
+      throw new Error('vertexDataBuffer creation failed')
     }
     
-    this.gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+    this.gl.bindBuffer(gl.ARRAY_BUFFER, vertexDataBuffer)
+    this.gl.bufferData(this.gl.ARRAY_BUFFER, vertexData, this.gl.STATIC_DRAW)
 
-    this.gl.bufferData(
-      this.gl.ARRAY_BUFFER,
-      new Float32Array([
-        -1.0, -1.0,
-        1.0, -1.0,
-        -1.0,  1.0,
-        -1.0,  1.0,
-        1.0, -1.0,
-        1.0,  1.0]),
-      this.gl.STATIC_DRAW,
-    )
+    const positionLocation = this.gl.getAttribLocation(this.program, 'position')
 
     this.gl.enableVertexAttribArray(positionLocation)
-    this.gl.vertexAttribPointer(positionLocation, 2, this.gl.FLOAT, false, 0, 0)
+    this.gl.vertexAttribPointer(positionLocation, 2, this.gl.FLOAT, false, 2 * 4, 0)
 
     const sync = this.gl.fenceSync(this.gl.SYNC_GPU_COMMANDS_COMPLETE, 0)
 
@@ -80,8 +71,7 @@ export class GLManager {
 
     const start = performance.now()
 
-    // draw
-    this.gl.drawArrays(this.gl.TRIANGLES, 0, 6)
+    this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4)
     this.gl.flush()
 
     console.info('this.gl | syncParameter: ', this.gl.getSyncParameter(sync, this.gl.SYNC_STATUS))

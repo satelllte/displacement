@@ -100,8 +100,9 @@ export const RenderAction = () => {
 
     console.info('webgl2 | glCtx: ', glCtx)
 
-    const glManager = new GLManager(glCtx)
-
+    setTimeout(() => {
+      const glManager = new GLManager(glCtx)
+    }, 1000)
   }, [canvasRef])
 
   return (
