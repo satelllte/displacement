@@ -34,13 +34,10 @@ export class GLManager {
     this.gl = gl
 
     this.vertexShader = this.createShader(this.gl.VERTEX_SHADER, vertexShaderSource)
-    console.info('this.vertexShader: ', this.vertexShader)
     
     this.fragmentShader = this.createShader(this.gl.FRAGMENT_SHADER, fragmentShaderSource)
-    console.info('this.fragmentShader: ', this.fragmentShader)
     
     this.program = this.createProgram()
-    console.info('this.program: ', this.program)
 
     this.gl.useProgram(this.program)
   }
