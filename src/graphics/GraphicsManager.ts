@@ -1,4 +1,9 @@
-import { U_RESOLUTION } from './uniforms'
+import {
+  U_RESOLUTION,
+  U_SEED_1,
+  U_SEED_2,
+  U_SEED_3,
+} from './uniforms'
 
 const vertexShaderSource = `#version 300 es
 
@@ -14,12 +19,19 @@ const fragmentShaderSource = `#version 300 es
 precision highp float;
 
 uniform vec2 u_resolution;
+uniform float u_seed_1;
+uniform float u_seed_2;
+uniform float u_seed_3;
 
 out vec4 fragColor;
 
+float rand(vec2 uv){
+  return fract(sin(dot(uv,vec2(10.9898 + 2.0 * u_seed_1, 58.233 + 20.0 * u_seed_2))) * 43758.5453123 + u_seed_3);
+}
+
 void main() {
   vec2 point = gl_FragCoord.xy / u_resolution;
-  fragColor = vec4(1.0 - point.x, 0.0, point.y * point.x, 1.0);
+  fragColor = vec4(rand(point), 0.0, 0.0, 1.0);
 }
 `
 
@@ -55,10 +67,17 @@ export class GraphicsManager {
     this.ctx.vertexAttribPointer(this.positionLocation, 2, this.ctx.FLOAT, false, this.vertexData.length, 0)
     
     this.setUniform2f(U_RESOLUTION, width, height)
+    this.setUniform1f(U_SEED_1, Math.random())
+    this.setUniform1f(U_SEED_2, Math.random())
+    this.setUniform1f(U_SEED_3, Math.random())
   }
 
   public async draw() {
     const timeStart = performance.now()
+
+    this.setUniform1f(U_SEED_1, Math.random())
+    this.setUniform1f(U_SEED_2, Math.random())
+    this.setUniform1f(U_SEED_3, Math.random())
 
     const sync = this.ctx.fenceSync(this.ctx.SYNC_GPU_COMMANDS_COMPLETE, 0)
 
@@ -83,6 +102,11 @@ export class GraphicsManager {
   private setUniform2f(name: string, x: number, y: number) {
     const location = this.ctx.getUniformLocation(this.program, name) as WebGLUniformLocation
     this.ctx.uniform2fv(location, [x, y])
+  }
+
+  private setUniform1f(name: string, x: number) {
+    const location = this.ctx.getUniformLocation(this.program, name) as WebGLUniformLocation
+    this.ctx.uniform1f(location, x)
   }
 
   private createShader(type: number, source: string): WebGLShader {
