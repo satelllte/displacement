@@ -13,6 +13,7 @@ import { WASMContext } from '@/context/WASMContext'
 import { WASMWorkerMessageType } from '@/workers/wasm/types'
 import type { WASMWorkerRenderMessage } from '@/workers/wasm/types'
 import { Button } from '@/components/ui/Button'
+import { GLManager } from './drafts/GLManager'
 
 export const RenderAction = () => {
   const canvasRef = React.useContext(CanvasContext)
@@ -84,6 +85,21 @@ export const RenderAction = () => {
 
     worker.postMessage(renderMessage)
   }, [worker, canvasRef])
+
+  React.useEffect(() => {
+    const canvas = canvasRef.current as HTMLCanvasElement
+
+    const glCtx = canvas.getContext('webgl2', { powerPreference: 'high-performance' } as WebGLContextAttributes)
+
+    if (!glCtx) {
+      throw new Error('WebGL2 is not supported')
+    }
+
+    console.info('webgl2 | glCtx: ', glCtx)
+
+    const glManager = new GLManager(glCtx)
+
+  }, [canvasRef])
 
   return (
     <Button disabled={disabled} onClick={render}>
