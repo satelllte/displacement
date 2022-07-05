@@ -109,9 +109,14 @@ export const RenderAction = () => {
 
     setRenderInProgress(true)
 
-    await graphicsManagerRef.current.draw()
+    const { renderTime } = await graphicsManagerRef.current.draw()
 
-    setRenderInProgress(false)
+    if (renderTime < 500) {
+      // when GPU render is very fast, give minimum of 0.5s between state changes to prevent UI flickers
+      setTimeout(() => setRenderInProgress(false), 500)
+    } else {
+      setRenderInProgress(false)
+    }
   }
 
   return (
