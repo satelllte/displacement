@@ -19,7 +19,7 @@ void main() {
 `
 
 export class GLManager {
-  private gl: WebGL2RenderingContext
+  private ctx: WebGL2RenderingContext
   private vertexShader: WebGLShader
   private fragmentShader: WebGLShader
   private program: WebGLProgram
@@ -32,88 +32,88 @@ export class GLManager {
   ])
   private positionLocation: GLint
 
-  constructor(gl: WebGL2RenderingContext) {
-    this.gl = gl
+  constructor(ctx: WebGL2RenderingContext) {
+    this.ctx = ctx
 
-    this.vertexShader = this.createShader(this.gl.VERTEX_SHADER, vertexShaderSource)
-    this.fragmentShader = this.createShader(this.gl.FRAGMENT_SHADER, fragmentShaderSource)
+    this.vertexShader = this.createShader(this.ctx.VERTEX_SHADER, vertexShaderSource)
+    this.fragmentShader = this.createShader(this.ctx.FRAGMENT_SHADER, fragmentShaderSource)
     
     this.program = this.createProgram()
-    this.gl.useProgram(this.program)
+    this.ctx.useProgram(this.program)
 
-    this.vertexDataBuffer = this.gl.createBuffer() as WebGLBuffer
-    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexDataBuffer)
-    this.gl.bufferData(this.gl.ARRAY_BUFFER, this.vertexData, this.gl.STATIC_DRAW)
+    this.vertexDataBuffer = this.ctx.createBuffer() as WebGLBuffer
+    this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.vertexDataBuffer)
+    this.ctx.bufferData(this.ctx.ARRAY_BUFFER, this.vertexData, this.ctx.STATIC_DRAW)
 
-    this.positionLocation = this.gl.getAttribLocation(this.program, 'position')
-    this.gl.enableVertexAttribArray(this.positionLocation)
-    this.gl.vertexAttribPointer(this.positionLocation, 2, this.gl.FLOAT, false, this.vertexData.length, 0)
+    this.positionLocation = this.ctx.getAttribLocation(this.program, 'position')
+    this.ctx.enableVertexAttribArray(this.positionLocation)
+    this.ctx.vertexAttribPointer(this.positionLocation, 2, this.ctx.FLOAT, false, this.vertexData.length, 0)
   }
 
   public async draw() {
     const timeStart = performance.now()
 
-    const sync = this.gl.fenceSync(this.gl.SYNC_GPU_COMMANDS_COMPLETE, 0)
+    const sync = this.ctx.fenceSync(this.ctx.SYNC_GPU_COMMANDS_COMPLETE, 0)
 
     if (!sync) {
       throw new Error('gl.fenceSync error')
     }
 
-    this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, this.vertexData.length / 2)
+    this.ctx.drawArrays(this.ctx.TRIANGLE_STRIP, 0, this.vertexData.length / 2)
 
-    this.gl.flush()
+    this.ctx.flush()
 
-    while (this.gl.getSyncParameter(sync, this.gl.SYNC_STATUS) === this.gl.UNSIGNALED) {
+    while (this.ctx.getSyncParameter(sync, this.ctx.SYNC_STATUS) === this.ctx.UNSIGNALED) {
       await new Promise(resolve => setTimeout(resolve, 1))
     }
 
-    this.gl.deleteSync(sync)
+    this.ctx.deleteSync(sync)
 
     const renderTime = performance.now() - timeStart
     console.info(`render time: ${renderTime}ms`)
   }
 
   private createShader(type: number, source: string): WebGLShader {
-    const shader = this.gl.createShader(type)
+    const shader = this.ctx.createShader(type)
 
     if (!shader) {
       throw new Error(`Couldn't create shader with type "${type}"`)
     }
 
-    this.gl.shaderSource(shader, source)
-    this.gl.compileShader(shader)
+    this.ctx.shaderSource(shader, source)
+    this.ctx.compileShader(shader)
 
-    const compileSuccess = this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)
+    const compileSuccess = this.ctx.getShaderParameter(shader, this.ctx.COMPILE_STATUS)
 
     if (compileSuccess) {
       return shader
     }
 
-    console.error(this.gl.getShaderInfoLog(shader))
-    this.gl.deleteShader(shader)
+    console.error(this.ctx.getShaderInfoLog(shader))
+    this.ctx.deleteShader(shader)
 
     throw new Error('Shader compilation error')
   }
 
   private createProgram() {
-    const program = this.gl.createProgram()
+    const program = this.ctx.createProgram()
 
     if (!program) {
       throw new Error('Couldn\'t create program')
     }
 
-    this.gl.attachShader(program, this.vertexShader)
-    this.gl.attachShader(program, this.fragmentShader)
-    this.gl.linkProgram(program)
+    this.ctx.attachShader(program, this.vertexShader)
+    this.ctx.attachShader(program, this.fragmentShader)
+    this.ctx.linkProgram(program)
 
-    const success = this.gl.getProgramParameter(program, this.gl.LINK_STATUS)
+    const success = this.ctx.getProgramParameter(program, this.ctx.LINK_STATUS)
 
     if (success) {
       return program
     }
 
-    console.error(this.gl.getProgramInfoLog(program))
-    this.gl.deleteProgram(program)
+    console.error(this.ctx.getProgramInfoLog(program))
+    this.ctx.deleteProgram(program)
 
     throw new Error('Program linking error')
   }
