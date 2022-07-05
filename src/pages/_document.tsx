@@ -5,7 +5,6 @@ const Document = () => {
   return (
     <Html lang='en'>
       <Head>
-        <meta charSet='utf-8' />
         <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
         <meta name='application-name' content={APP_NAME} />
         <meta name='apple-mobile-web-app-capable' content='yes' />

@@ -1,5 +1,6 @@
-import { randomInt } from '../../utils/random'
-import { WASMWorkerMessageType } from './types'
+import { randomInt } from '@/utils/random'
+import { randRectPosition } from './utils/randRectPosition'
+import { WASMWorkerMessageType, WASMWorkerRenderProgressMessage } from './types'
 import type {
   WASMWorkerMessage,
   WASMWorkerReadyMessage,
@@ -22,6 +23,10 @@ declare var self: IDedicatedWorkerGlobalScope<WASMWorkerMessage>
           height,
           iterations,
           backgroundBrightness,
+          rectBrightnessMin,
+          rectBrightnessMax,
+          rectAlphaMin,
+          rectAlphaMax,
         } = event.data
 
         const pixels = new Uint8ClampedArray(buffer, pointer, width * height * 4)
@@ -35,20 +40,27 @@ declare var self: IDedicatedWorkerGlobalScope<WASMWorkerMessage>
         )
 
         for (let i = 0; i < iterations; i++) {
-          const x0 = randomInt(0, width - 1)
-          const y0 = randomInt(0, height - 1)
-          const x1 = Math.min(x0 + randomInt(10, 100), width - 1)
-          const y1 = Math.min(y0 + randomInt(10, 100), height - 1)
+          const brightness = randomInt(rectBrightnessMin, rectBrightnessMax)
+          const alpha = randomInt(rectAlphaMin, rectAlphaMax)
+          const { x0, y0, x1, y1 } = randRectPosition(width, height)
           wasm.fillRect(
-            randomInt(0x00, 0x99),
-            randomInt(0x00, 0x99),
-            randomInt(0x00, 0x99),
+            brightness,
+            brightness,
+            brightness,
+            alpha,
             x0,
             y0,
             x1,
             y1,
             width,
           )
+          
+          const renderProgressMessage: WASMWorkerRenderProgressMessage = {
+            type: WASMWorkerMessageType.renderProgress,
+            percent: (i / iterations) * 100,
+          }
+
+          self.postMessage(renderProgressMessage)
         }
 
         const renderCompletedMessage: WASMWorkerRenderCompletedMessage = {

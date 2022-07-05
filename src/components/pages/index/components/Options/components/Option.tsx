@@ -1,6 +1,7 @@
 import type { RecoilState } from 'recoil'
 import { useRecoilState } from 'recoil'
 import { Range } from '@/components/ui/Range'
+import { OptionHeading } from './components/OptionHeading'
 
 interface OptionProps {
   id: string
@@ -21,10 +22,7 @@ export const Option: React.FC<OptionProps> = ({
 
   return (
     <>
-      <div className='flex justify-between'>
-        <label htmlFor={id} className='text-sm text-neutral-300'>{label}</label>
-        <span className='text-sm text-neutral-300'>{value}</span>
-      </div>
+      <OptionHeading label={label} displayValue={value} />
       <Range
         id={id}
         min={min}

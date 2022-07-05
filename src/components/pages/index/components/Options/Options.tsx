@@ -1,6 +1,14 @@
 import React from 'react'
-import { backgroundBrightnessState, iterationsState } from '@/state'
+import {
+  backgroundBrightnessState,
+  iterationsState,
+  rectBrightnessMinState,
+  rectBrightnessMaxState,
+  rectAlphaMinState,
+  rectAlphaMaxState,
+} from '@/state'
 import { Option } from './components/Option'
+import { OptionDual } from './components/OptionDual'
 import { RenderAction } from './components/RenderAction'
 
 export const Options = () => {
@@ -21,6 +29,22 @@ export const Options = () => {
           min={0x00}
           max={0xFF}
           state={backgroundBrightnessState}
+        />
+        <OptionDual
+          id='rectBrightness'
+          label='Rect:Background'
+          min={0x00}
+          max={0xFF}
+          stateMin={rectBrightnessMinState}
+          stateMax={rectBrightnessMaxState}
+        />
+        <OptionDual
+          id='rectAlpha'
+          label='Rect:Alpha'
+          min={0x00}
+          max={0xFF}
+          stateMin={rectAlphaMinState}
+          stateMax={rectAlphaMaxState}
         />
       </div>
       <RenderAction/>

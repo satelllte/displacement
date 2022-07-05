@@ -91,6 +91,12 @@ Code formatting check:
 
 ### Web
 
+Test units:
+
+```bash
+npm run test:units
+```
+
 Types check:
 
 ```bash

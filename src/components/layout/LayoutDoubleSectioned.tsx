@@ -13,12 +13,12 @@ export const LayoutDoubleSectioned: React.FC<LayoutDoubleSectionedProps> = ({
   return (
     <Layout>
       <div className='md:flex'>
-        <section className='mt-16 h-[calc(100vh-theme(spacing.16))] relative md:flex-1'>
+        <div className='mt-16 h-[calc(100vh-theme(spacing.16))] relative md:flex-1'>
           {section1}
-        </section>
-        <section className='mt-16 h-[calc(100vh-theme(spacing.16))] relative md:flex-1'>
+        </div>
+        <div className='mt-16 h-[calc(100vh-theme(spacing.16))] relative md:flex-1'>
           {section2}
-        </section>
+        </div>
       </div>
     </Layout>
   )
