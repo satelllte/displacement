@@ -1,5 +1,6 @@
 import React from 'react'
 import { useRecoilCallback } from 'recoil'
+import { GraphicsManager } from '@/graphics'
 import {
   iterationsState,
   backgroundBrightnessState,
@@ -17,6 +18,8 @@ import { Button } from '@/components/ui/Button'
 export const RenderAction = () => {
   const canvasRef = React.useContext(CanvasContext)
   const worker = React.useContext(WASMContext)
+
+  const graphicsManagerRef = React.useRef<GraphicsManager>()
 
   const [renderInProgress, setRenderInProgress] = React.useState<boolean>(false)
 
@@ -85,8 +88,39 @@ export const RenderAction = () => {
     worker.postMessage(renderMessage)
   }, [worker, canvasRef])
 
+  React.useEffect(() => {
+    const canvas = canvasRef.current as HTMLCanvasElement
+
+    const { width, height } = canvas
+
+    const ctx = canvas.getContext('webgl2', { powerPreference: 'high-performance' } as WebGLContextAttributes)
+
+    if (!ctx) {
+      throw new Error('WebGL2 is not supported')
+    }
+
+    graphicsManagerRef.current = new GraphicsManager(ctx, width, height)
+  }, [canvasRef])
+
+  const renderShader = async () => {
+    if (!graphicsManagerRef.current) {
+      return
+    }
+
+    setRenderInProgress(true)
+
+    const { renderTime } = await graphicsManagerRef.current.draw()
+
+    if (renderTime < 500) {
+      // when GPU render is very fast, give minimum of 0.5s between state changes to prevent UI flickers
+      setTimeout(() => setRenderInProgress(false), 500)
+    } else {
+      setRenderInProgress(false)
+    }
+  }
+
   return (
-    <Button disabled={disabled} onClick={render}>
+    <Button disabled={disabled} onClick={renderShader}>
       Render
     </Button>
   )
