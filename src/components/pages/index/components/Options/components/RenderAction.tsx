@@ -14,6 +14,7 @@ import { WASMContext } from '@/context/WASMContext'
 import { WASMWorkerMessageType } from '@/workers/wasm/types'
 import type { WASMWorkerRenderMessage } from '@/workers/wasm/types'
 import { Button } from '@/components/ui/Button'
+import { randomInt } from '@/utils/random'
 
 export const RenderAction = () => {
   const canvasRef = React.useContext(CanvasContext)
@@ -88,19 +89,19 @@ export const RenderAction = () => {
     worker.postMessage(renderMessage)
   }, [worker, canvasRef])
 
-  React.useEffect(() => {
-    const canvas = canvasRef.current as HTMLCanvasElement
+  // React.useEffect(() => {
+  //   const canvas = canvasRef.current as HTMLCanvasElement
 
-    const { width, height } = canvas
+  //   const { width, height } = canvas
 
-    const ctx = canvas.getContext('webgl2', { powerPreference: 'high-performance' } as WebGLContextAttributes)
+  //   const ctx = canvas.getContext('webgl2', { powerPreference: 'high-performance' } as WebGLContextAttributes)
 
-    if (!ctx) {
-      throw new Error('WebGL2 is not supported')
-    }
+  //   if (!ctx) {
+  //     throw new Error('WebGL2 is not supported')
+  //   }
 
-    graphicsManagerRef.current = new GraphicsManager(ctx, width, height)
-  }, [canvasRef])
+  //   graphicsManagerRef.current = new GraphicsManager(ctx, width, height)
+  // }, [canvasRef])
 
   const renderShader = async () => {
     if (!graphicsManagerRef.current) {
@@ -119,8 +120,38 @@ export const RenderAction = () => {
     }
   }
 
+  const renderNative = () => {
+    const canvas = canvasRef.current as HTMLCanvasElement
+    console.info('canvas: ', canvas)
+    
+    const ctx = canvas.getContext('2d', { desynchronized: true } as CanvasRenderingContext2DSettings) as CanvasRenderingContext2D
+    console.info('ctx: ', ctx)
+
+    let i = 0;
+
+    const draw = () => {
+      for (let j = i; j <= i + 10; j++) {
+        ctx.fillStyle = `rgba(${0x99}, 192, 192, 0.02)`
+        ctx.fillRect(
+          randomInt(0, canvas.width - 1),
+          randomInt(0, canvas.height - 1),
+          randomInt(512, 1024),
+          randomInt(512, 1024),
+        )
+      }
+
+      i += 10
+
+      if (i < 2500) {
+        requestAnimationFrame(draw)
+      }
+    }
+
+    requestAnimationFrame(draw)
+  }
+
   return (
-    <Button disabled={disabled} onClick={renderShader}>
+    <Button disabled={disabled} onClick={renderNative}>
       Render
     </Button>
   )
