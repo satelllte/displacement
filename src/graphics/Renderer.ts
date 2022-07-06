@@ -20,6 +20,8 @@ export class Renderer {
     backgroundBrightness: number,
     rectBrightnessMin: number,
     rectBrightnessMax: number,
+    rectAlphaMin: number,
+    rectAlphaMax: number,
     onComplete: () => void,
   ) {
     this.ctx.fillStyle = `rgb(${backgroundBrightness}, ${backgroundBrightness}, ${backgroundBrightness})`
@@ -33,7 +35,8 @@ export class Renderer {
       
       while (iteration < last) {
         const brightness = randomInt(rectBrightnessMin, rectBrightnessMax)
-        this.ctx.fillStyle = `rgba(${brightness}, ${brightness}, ${brightness}, 0.5)`
+        const alpha = randomInt(rectAlphaMin, rectAlphaMax) / 0xFF
+        this.ctx.fillStyle = `rgba(${brightness}, ${brightness}, ${brightness}, ${alpha})`
         this.ctx.fillRect(
           randomInt(0, this.width - 1),
           randomInt(0, this.height - 1),

@@ -41,6 +41,8 @@ export const RenderAction = () => {
       backgroundBrightness,
       rectBrightnessMin,
       rectBrightnessMax,
+      rectAlphaMin,
+      rectAlphaMax,
       onRenderComplete,
     )
   }, [renderer, onRenderComplete])
