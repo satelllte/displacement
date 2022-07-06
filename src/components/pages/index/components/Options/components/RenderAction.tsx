@@ -1,8 +1,8 @@
 import React from 'react'
+import { Renderer } from '@/graphics'
 import { CanvasContext } from '@/context/CanvasContext'
 import { WASMContext } from '@/context/WASMContext'
 import { Button } from '@/components/ui/Button'
-import { randomInt } from '@/utils/random'
 
 export const RenderAction = () => {
   const canvasRef = React.useContext(CanvasContext)
@@ -12,35 +12,21 @@ export const RenderAction = () => {
 
   const disabled = !worker || renderInProgress
 
-  const renderNative = () => {
+  const onRenderComplete = () => {
+    setRenderInProgress(false)
+  }
+
+  const startRender = () => {
     const canvas = canvasRef.current as HTMLCanvasElement
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
-    let i = 0
+    const renderer = new Renderer(ctx, canvas.width, canvas.height)
 
-    const draw = () => {
-      for (let j = i; j <= i + 10; j++) {
-        ctx.fillStyle = `rgba(${0x99}, 192, 192, 0.02)`
-        ctx.fillRect(
-          randomInt(0, canvas.width - 1),
-          randomInt(0, canvas.height - 1),
-          randomInt(512, 1024),
-          randomInt(512, 1024),
-        )
-      }
-
-      i += 10
-
-      if (i < 250) {
-        requestAnimationFrame(draw)
-      }
-    }
-
-    requestAnimationFrame(draw)
+    renderer.startRender(1500, onRenderComplete)
   }
 
   return (
-    <Button disabled={disabled} onClick={renderNative}>
+    <Button disabled={disabled} onClick={startRender}>
       Render
     </Button>
   )
