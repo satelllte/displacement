@@ -38,6 +38,9 @@ export const RenderAction = () => {
 
     renderer.startRender(
       iterations,
+      backgroundBrightness,
+      rectBrightnessMin,
+      rectBrightnessMax,
       onRenderComplete,
     )
   }, [renderer, onRenderComplete])

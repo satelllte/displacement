@@ -17,9 +17,13 @@ export class Renderer {
 
   public startRender(
     iterations: number,
+    backgroundBrightness: number,
+    rectBrightnessMin: number,
+    rectBrightnessMax: number,
     onComplete: () => void,
   ) {
-    this.ctx.clearRect(0, 0, this.width, this.height)
+    this.ctx.fillStyle = `rgb(${backgroundBrightness}, ${backgroundBrightness}, ${backgroundBrightness})`
+    this.ctx.fillRect(0, 0, this.width, this.height)
 
     let iteration = 0
     const frameIterations = 50
@@ -28,7 +32,8 @@ export class Renderer {
       const last = Math.min(iteration + frameIterations, iterations)
       
       while (iteration < last) {
-        this.ctx.fillStyle = `rgba(${0x99}, 192, 192, 0.02)`
+        const brightness = randomInt(rectBrightnessMin, rectBrightnessMax)
+        this.ctx.fillStyle = `rgba(${brightness}, ${brightness}, ${brightness}, 0.5)`
         this.ctx.fillRect(
           randomInt(0, this.width - 1),
           randomInt(0, this.height - 1),
