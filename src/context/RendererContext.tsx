@@ -6,25 +6,25 @@ interface RendererContextProviderProps {
   children: React.ReactNode
 }
 
-const defaultValue = React.createRef<Renderer>() as React.MutableRefObject<Renderer>
+const defaultValue = undefined
 
-export const RendererContext = React.createContext<React.MutableRefObject<Renderer | undefined>>(defaultValue)
+export const RendererContext = React.createContext<Renderer | undefined>(defaultValue)
 
 export const RendererContextProvider: React.FC<RendererContextProviderProps> = ({
   children
 }) => {
   const canvasRef = React.useContext(CanvasContext)
-  const rendererRef = React.useRef<Renderer>()
+  const [renderer, setRenderer] = React.useState<Renderer>()
 
   React.useEffect(() => {
     const canvas = canvasRef.current as HTMLCanvasElement
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
-    rendererRef.current = new Renderer(ctx, canvas.width, canvas.height)
+    setRenderer(new Renderer(ctx, canvas.width, canvas.height))
   }, [canvasRef])
 
   return (
-    <RendererContext.Provider value={rendererRef}>
+    <RendererContext.Provider value={renderer}>
       {children}
     </RendererContext.Provider>
   )
