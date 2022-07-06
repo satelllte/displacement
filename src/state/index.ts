@@ -3,7 +3,7 @@ import { RECOIL_KEYS } from './recoilKeys'
 
 export const backgroundBrightnessState = atom<number>({
   key: RECOIL_KEYS.backgroundBrightness,
-  default: 0x80,
+  default: 0x20,
 })
 
 export const iterationsState = atom<number>({
