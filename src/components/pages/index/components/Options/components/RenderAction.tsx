@@ -122,12 +122,9 @@ export const RenderAction = () => {
 
   const renderNative = () => {
     const canvas = canvasRef.current as HTMLCanvasElement
-    console.info('canvas: ', canvas)
-    
-    const ctx = canvas.getContext('2d', { desynchronized: true } as CanvasRenderingContext2DSettings) as CanvasRenderingContext2D
-    console.info('ctx: ', ctx)
+    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
-    let i = 0;
+    let i = 0
 
     const draw = () => {
       for (let j = i; j <= i + 10; j++) {
@@ -142,7 +139,7 @@ export const RenderAction = () => {
 
       i += 10
 
-      if (i < 2500) {
+      if (i < 250) {
         requestAnimationFrame(draw)
       }
     }
