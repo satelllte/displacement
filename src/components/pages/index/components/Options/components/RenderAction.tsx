@@ -16,7 +16,7 @@ export const RenderAction = () => {
 
   const [renderInProgress, setRenderInProgress] = React.useState<boolean>(false)
 
-  const disabled = renderInProgress
+  const disabled = !renderer || renderInProgress
 
   const onRenderComplete = React.useCallback(() => {
     setRenderInProgress(false)

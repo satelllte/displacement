@@ -8,6 +8,7 @@ import {
 } from './workers/renderer/types'
 
 export class Renderer {
+  private ready: boolean = false
   private canvas: HTMLCanvasElement
   private width: number
   private height: number
@@ -20,16 +21,19 @@ export class Renderer {
     canvas: HTMLCanvasElement,
     width: number,
     height: number,
+    onReady: (renderer: Renderer) => void,
   ) {
     this.canvas = canvas
     this.width = width
     this.height = height
     this.offscreenSupported = OffscreenCanvasFeature.isSupported()
 
-    this.init()
+    this.init(onReady)
   }
 
-  private async init() {
+  private async init(
+    onReady: (renderer: Renderer) => void,
+  ) {
     if (this.offscreenSupported) {
       this.offscreenCanvas = this.canvas.transferControlToOffscreen()
       this.rendererWorker = await new Worker(new URL('./workers/renderer', import.meta.url))
@@ -47,6 +51,9 @@ export class Renderer {
       }
       this.ctx = ctx
     }
+    
+    this.ready = true
+    onReady(this)
   }
 
   public startRender(
@@ -58,6 +65,10 @@ export class Renderer {
     rectAlphaMax: number,
     onComplete: () => void,
   ) {
+    if (!this.ready) {
+      throw new Error('Renderer is not ready yet')
+    }
+
     if (!this.offscreenSupported) {
       if (!this.ctx) {
         throw new Error('Context wasn\'t not set')

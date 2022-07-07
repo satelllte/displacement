@@ -18,7 +18,13 @@ export const RendererContextProvider: React.FC<RendererContextProviderProps> = (
 
   React.useEffect(() => {
     const canvas = canvasRef.current as HTMLCanvasElement
-    setRenderer(new Renderer(canvas, canvas.width, canvas.height))
+    const { width, height } = canvas
+    new Renderer(
+      canvas,
+      width,
+      height,
+      (r: Renderer) => setRenderer(r),
+    )
   }, [canvasRef])
 
   return (
