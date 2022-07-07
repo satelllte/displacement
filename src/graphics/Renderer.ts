@@ -1,6 +1,11 @@
 import { OffscreenCanvasFeature } from '@/utils/feature-detection'
 import { render } from './helpers/render'
-import { RendererWorker, RendererWorkerRenderMessage, RendererWorkerMessageType } from './workers/renderer/types'
+import {
+  RendererWorker,
+  RendererWorkerInitializeMessage,
+  RendererWorkerRenderMessage,
+  RendererWorkerMessageType,
+} from './workers/renderer/types'
 
 export class Renderer {
   private canvas: HTMLCanvasElement
@@ -20,12 +25,23 @@ export class Renderer {
     this.width = width
     this.height = height
     this.offscreenSupported = OffscreenCanvasFeature.isSupported()
-    
+
+    this.init()
+  }
+
+  private async init() {
     if (this.offscreenSupported) {
       this.offscreenCanvas = this.canvas.transferControlToOffscreen()
-      this.rendererWorker = new Worker(new URL('./workers/renderer', import.meta.url))
+      this.rendererWorker = await new Worker(new URL('./workers/renderer', import.meta.url))
+      
+      const msg: RendererWorkerInitializeMessage = {
+        type: RendererWorkerMessageType.initialize,
+        canvas: this.offscreenCanvas
+      }
+      
+      this.rendererWorker.postMessage(msg, [this.offscreenCanvas])
     } else {
-      const ctx = canvas.getContext('2d')
+      const ctx = this.canvas.getContext('2d')
       if (!ctx) {
         throw new Error('Count not get 2d context for canvas')
       }
@@ -66,9 +82,8 @@ export class Renderer {
         throw new Error('No RendererWorker instance exists')
       }
 
-      this.rendererWorker.postMessage({
+      const msg: RendererWorkerRenderMessage = {
         type: RendererWorkerMessageType.render,
-        canvas: this.offscreenCanvas,
         width: this.width,
         height: this.height,
         iterations,
@@ -77,7 +92,9 @@ export class Renderer {
         rectBrightnessMax,
         rectAlphaMin,
         rectAlphaMax,
-      } as RendererWorkerRenderMessage, [this.offscreenCanvas])
+      }
+
+      this.rendererWorker.postMessage(msg)
 
       this.rendererWorker.onmessage = (event) => {
         if (event.data.type === RendererWorkerMessageType.renderCompleted) {

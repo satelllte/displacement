@@ -1,11 +1,16 @@
 export enum RendererWorkerMessageType {
+  initialize = 'initialize',
   render = 'render',
   renderCompleted = 'renderCompleted',
 }
 
+export type RendererWorkerInitializeMessage = {
+  type: RendererWorkerMessageType.initialize,
+  canvas: OffscreenCanvas,
+}
+
 export type RendererWorkerRenderMessage = {
   type: RendererWorkerMessageType.render
-  canvas: OffscreenCanvas,
   width: number,
   height: number,
   iterations: number,
@@ -21,6 +26,7 @@ export type RendererWorkerRenderCompletedMessage = {
 }
 
 export type RendererWorkerMessage =
+  | RendererWorkerInitializeMessage
   | RendererWorkerRenderMessage
   | RendererWorkerRenderCompletedMessage
 

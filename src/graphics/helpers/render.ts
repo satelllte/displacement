@@ -18,6 +18,9 @@ export const render = (
   let iteration = 0
   const frameIterations = 50
 
+  const maxWidth = Math.round(width / 8)
+  const maxHeight = Math.round(height / 8)
+
   const draw = () => {
     const last = Math.min(iteration + frameIterations, iterations)
     
@@ -28,8 +31,8 @@ export const render = (
       ctx.fillRect(
         randomInt(0, width - 1),
         randomInt(0, height - 1),
-        randomInt(-1024, 1024),
-        randomInt(-1024, 1024),
+        randomInt(-maxWidth, maxWidth),
+        randomInt(-maxHeight, maxHeight),
       )
       iteration++
     }

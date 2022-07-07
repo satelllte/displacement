@@ -6,6 +6,8 @@ import { render } from '../../helpers/render'
 
 declare const self: IDedicatedWorkerGlobalScope<RendererWorkerMessage>
 
+let offscreenCanvas: OffscreenCanvas | null = null
+
 const onCompleted = () => {
   const msg: RendererWorkerRenderCompletedMessage = {
     type: RendererWorkerMessageType.renderCompleted
@@ -14,41 +16,46 @@ const onCompleted = () => {
 }
 
 self.onmessage = (event) => {
-  switch(event.data.type) {
-    case RendererWorkerMessageType.render:
-      const {
-        canvas,
-        width,
-        height,
-        iterations,
-        backgroundBrightness,
-        rectBrightnessMin,
-        rectBrightnessMax,
-        rectAlphaMin,
-        rectAlphaMax,
-      } = event.data
+  if (event.data.type === RendererWorkerMessageType.initialize) {
+    const { canvas } = event.data
+    offscreenCanvas = canvas
+  }
 
-      console.info('worker -> render call')
+  if (event.data.type === RendererWorkerMessageType.render) {
+    const {
+      width,
+      height,
+      iterations,
+      backgroundBrightness,
+      rectBrightnessMin,
+      rectBrightnessMax,
+      rectAlphaMin,
+      rectAlphaMax,
+    } = event.data
 
-      const ctx = canvas.getContext('2d')
+    console.info('worker -> render call')
 
-      if (!ctx) {
-        throw new Error('Cannot get 2d context of the offscreen canvas')
-      }
-
-      render(
-        ctx,
-        width,
-        height,
-        iterations,
-        backgroundBrightness,
-        rectBrightnessMin,
-        rectBrightnessMax,
-        rectAlphaMin,
-        rectAlphaMax,
-        onCompleted,
-      )
-
-      break
+    if (!offscreenCanvas) {
+      throw new Error('offscreenCanvas wasn\'t initialized')
     }
+
+    const ctx = offscreenCanvas.getContext('2d')
+
+    if (!ctx) {
+      throw new Error('Cannot get 2d context of the offscreen canvas')
+    }
+
+    render(
+      ctx,
+      width,
+      height,
+      iterations,
+      backgroundBrightness,
+      rectBrightnessMin,
+      rectBrightnessMax,
+      rectAlphaMin,
+      rectAlphaMax,
+      onCompleted,
+    )
+  }
 }
