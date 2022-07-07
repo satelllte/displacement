@@ -1,4 +1,5 @@
-import { randomInt } from "@/utils/random"
+import { OffscreenCanvasFeature } from '@/utils/feature-detection'
+import { randomInt } from '@/utils/random'
 
 export class Renderer {
   private ctx: CanvasRenderingContext2D
@@ -13,6 +14,10 @@ export class Renderer {
     this.ctx = ctx
     this.width = width
     this.height = height
+
+    const offscreenCanvasSupported = OffscreenCanvasFeature.isSupported()
+
+    console.info('offscreenCanvasSupported: ', offscreenCanvasSupported)
   }
 
   public startRender(
