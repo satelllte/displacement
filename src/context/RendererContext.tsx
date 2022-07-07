@@ -18,9 +18,7 @@ export const RendererContextProvider: React.FC<RendererContextProviderProps> = (
 
   React.useEffect(() => {
     const canvas = canvasRef.current as HTMLCanvasElement
-    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
-
-    setRenderer(new Renderer(ctx, canvas.width, canvas.height))
+    setRenderer(new Renderer(canvas, canvas.width, canvas.height))
   }, [canvasRef])
 
   return (
