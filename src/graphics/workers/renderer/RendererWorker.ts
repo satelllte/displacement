@@ -33,8 +33,6 @@ self.onmessage = (event) => {
       rectAlphaMax,
     } = event.data
 
-    console.info('worker -> render call')
-
     if (!offscreenCanvas) {
       throw new Error('offscreenCanvas wasn\'t initialized')
     }
