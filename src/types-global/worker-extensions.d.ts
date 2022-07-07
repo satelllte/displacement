@@ -5,7 +5,8 @@
 declare interface IWorker<MessageEventType> extends Worker {
   onmessage: ((this: IWorker<MessageEventType>, ev: MessageEvent<MessageEventType>) => void) | null
   onmessageerror: ((this: IWorker<MessageEventType>, ev: MessageEvent<MessageEventType>) => any) | null
-  postMessage(message: MessageEventType, transfer: Transferable[]): void
+  // Make `OffscreenCanvas` as a part of `Transferable` | https://github.com/DefinitelyTyped/DefinitelyTyped/blob/3326402a48e782526055736f701673a2235b9216/types/offscreencanvas/index.d.ts#L94-L97
+  postMessage(message: MessageEventType, transfer?: Array<Transferable | OffscreenCanvas>): void
   postMessage(message: MessageEventType, options?: StructuredSerializeOptions): void
 }
 
