@@ -42,7 +42,7 @@ jobs:
 
   deploy:
     name: Deploy
-    needs: [webassembly, web]  
+    needs: [web]
     runs-on: ubuntu-latest
     defaults:
       run:
