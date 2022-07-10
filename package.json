@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "serve": "serve out",
-    "build:web": "next build && next export",
+    "build": "next build && next export",
     "test:units": "vitest run --threads",
     "test:typescript": "tsc --noEmit",
     "test:lint": "next lint"
