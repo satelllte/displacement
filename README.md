@@ -31,12 +31,6 @@ Install dependencies:
 npm install
 ```
 
-Compile WebAssembly:
-
-```bash
-npm run build:wasm
-```
-
 Run the development server:
 
 ```bash
@@ -48,8 +42,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Production Build
 
 ```bash
-npm run build:wasm
-npm run build:web
+npm run build
 ```
 
 Output files will be available in `out` directory.
@@ -62,34 +55,6 @@ npm run serve
 ```
 
 ## Testing
-
-### WebAssembly
-
-Before running any of the test here, go to `wasm` directory
-
-```bash
-cd wasm
-```
-
-Unit tests:
-
-```bash
-./rs-test.sh
-```
-
-Code quality check:
-
-```bash
-./rs-clippy.sh
-```
-
-Code formatting check:
-
-```bash
-./rs-fmt.sh
-```
-
-### Web
 
 Test units:
 

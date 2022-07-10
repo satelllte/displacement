@@ -13,33 +13,6 @@ env:
   NETLIFY_DEVELOPMENT_DEPLOY_ID: ${{ github.sha }}
 
 jobs:
-  webassembly:
-    name: WebAssembly
-    runs-on: ubuntu-latest
-    env:
-      CARGO_TERM_COLOR: always
-      RUST_TEST_THREADS: 32
-    defaults:
-      run:
-        working-directory: wasm
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/cache@v3
-      with:
-        path: |
-          ~/.cargo/bin/
-          ~/.cargo/registry/index/
-          ~/.cargo/registry/cache/
-          ~/.cargo/git/db/
-          target/
-        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-    - name: Tests
-      run: ./rs-test.sh
-    - name: Code quality
-      run: ./rs-clippy.sh
-    - name: Code formatting
-      run: ./rs-fmt.sh
-
   web:
     name: Web
     runs-on: ubuntu-latest
@@ -47,15 +20,6 @@ jobs:
       NEXT_CI_BUILD: true
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/cache@v3
-      with:
-        path: |
-          ~/.cargo/bin/
-          ~/.cargo/registry/index/
-          ~/.cargo/registry/cache/
-          ~/.cargo/git/db/
-          ./wasm/target/
-        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
@@ -63,16 +27,14 @@ jobs:
         cache-dependency-path: ./package-lock.json
     - name: Install dependencies
       run: npm ci
-    - name: Build WebAssembly
-      run: npm run build:wasm
     - name: Unit tests
       run: npm run test:units
     - name: Validate types
       run: npm run test:typescript
     - name: Code linting
       run: npm run test:lint
-    - name: Build web application
-      run: npm run build:web
+    - name: Build application
+      run: npm run build
     - uses: actions/upload-artifact@v3
       with:
         name: output
