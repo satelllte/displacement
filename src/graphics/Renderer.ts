@@ -1,6 +1,6 @@
 import { OffscreenCanvasFeature } from '@/utils/feature-detection'
 import { render } from './helpers/render'
-import { RenderOptions } from './types'
+import type { RenderOptions } from './types'
 import {
   RendererWorker,
   RendererWorkerInitializeMessage,

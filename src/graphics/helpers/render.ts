@@ -1,5 +1,5 @@
 import { randomInt } from "@/utils/random"
-import { RenderOptions } from "../types"
+import type { RenderOptions } from "../types"
 
 export const render = (
   ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,

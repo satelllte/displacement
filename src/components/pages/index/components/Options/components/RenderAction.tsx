@@ -10,7 +10,7 @@ import {
 } from '@/state'
 import { RendererContext } from '@/context/RendererContext'
 import { Button } from '@/components/ui/Button'
-import { RenderOptions } from '@/graphics/types'
+import type { RenderOptions } from '@/graphics/types'
 
 export const RenderAction = () => {
   const renderer = React.useContext(RendererContext)
