@@ -20,8 +20,7 @@ _NOT A FINAL PRODUCT, THE PRODUCT IS IN THE EARLY STAGES OF DEVELOPMENT_
 
 ## Prerequisites
 
-- [NodeJS](https://nodejs.org/)
-- [Rust & Cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html)
+- [NodeJS](https://nodejs.org/) v16
 
 ## Development
 
