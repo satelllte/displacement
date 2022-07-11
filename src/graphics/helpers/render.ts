@@ -18,8 +18,10 @@ export const render = (
   let iteration = 0
   const frameIterations = 50
 
-  const maxWidth = Math.round(width / 8)
-  const maxHeight = Math.round(height / 8)
+  const minRectWidth = Math.round(width / 24)
+  const maxRectWidth = Math.round(width / 8)
+  const minRectHeight = Math.round(height / 24)
+  const maxRectHeight = Math.round(height / 8)
 
   const draw = () => {
     const last = Math.min(iteration + frameIterations, iterations)
@@ -27,12 +29,14 @@ export const render = (
     while (iteration < last) {
       const brightness = randomInt(rectBrightnessMin, rectBrightnessMax)
       const alpha = randomInt(rectAlphaMin, rectAlphaMax) / 0xFF
+      const rectWidth = randomInt(minRectWidth, maxRectWidth)
+      const rectHeight = randomInt(minRectHeight, maxRectHeight)
       ctx.fillStyle = `rgba(${brightness}, ${brightness}, ${brightness}, ${alpha})`
       ctx.fillRect(
-        randomInt(0, width - 1),
-        randomInt(0, height - 1),
-        randomInt(-maxWidth, maxWidth),
-        randomInt(-maxHeight, maxHeight),
+        randomInt(0, width - rectWidth - 1),
+        randomInt(0, height - rectHeight - 1),
+        rectWidth,
+        rectHeight,
       )
       iteration++
     }
