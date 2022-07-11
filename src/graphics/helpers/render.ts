@@ -1,18 +1,14 @@
 import { randomInt } from "@/utils/random"
+import { RenderOptions } from "../types"
 
 export const render = (
   ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
   width: number,
   height: number,
-  iterations: number,
-  backgroundBrightness: number,
-  rectBrightnessMin: number,
-  rectBrightnessMax: number,
-  rectAlphaMin: number,
-  rectAlphaMax: number,
+  options: RenderOptions,
   onComplete: () => void,
 ) => {
-  ctx.fillStyle = `rgb(${backgroundBrightness}, ${backgroundBrightness}, ${backgroundBrightness})`
+  ctx.fillStyle = `rgb(${options.backgroundBrightness}, ${options.backgroundBrightness}, ${options.backgroundBrightness})`
   ctx.fillRect(0, 0, width, height)
 
   let iteration = 0
@@ -24,11 +20,11 @@ export const render = (
   const maxRectHeight = Math.round(height / 8)
 
   const draw = () => {
-    const last = Math.min(iteration + frameIterations, iterations)
+    const last = Math.min(iteration + frameIterations, options.iterations)
     
     while (iteration < last) {
-      const brightness = randomInt(rectBrightnessMin, rectBrightnessMax)
-      const alpha = randomInt(rectAlphaMin, rectAlphaMax) / 0xFF
+      const brightness = randomInt(options.rectBrightnessMin, options.rectBrightnessMax)
+      const alpha = randomInt(options.rectAlphaMin, options.rectAlphaMax) / 0xFF
       const rectWidth = randomInt(minRectWidth, maxRectWidth)
       const rectHeight = randomInt(minRectHeight, maxRectHeight)
       ctx.fillStyle = `rgba(${brightness}, ${brightness}, ${brightness}, ${alpha})`
@@ -41,7 +37,7 @@ export const render = (
       iteration++
     }
     
-    if (iteration < iterations) {
+    if (iteration < options.iterations) {
       requestAnimationFrame(draw)
       return
     }

@@ -1,5 +1,6 @@
 import { OffscreenCanvasFeature } from '@/utils/feature-detection'
 import { render } from './helpers/render'
+import { RenderOptions } from './types'
 import {
   RendererWorker,
   RendererWorkerInitializeMessage,
@@ -57,12 +58,7 @@ export class Renderer {
   }
 
   public startRender(
-    iterations: number,
-    backgroundBrightness: number,
-    rectBrightnessMin: number,
-    rectBrightnessMax: number,
-    rectAlphaMin: number,
-    rectAlphaMax: number,
+    options: RenderOptions,
     onComplete: () => void,
   ) {
     if (!this.ready) {
@@ -77,12 +73,7 @@ export class Renderer {
         this.ctx,
         this.width,
         this.height,
-        iterations,
-        backgroundBrightness,
-        rectBrightnessMin,
-        rectBrightnessMax,
-        rectAlphaMin,
-        rectAlphaMax,
+        options,
         onComplete,
       )
     } else {
@@ -97,12 +88,7 @@ export class Renderer {
         type: RendererWorkerMessageType.render,
         width: this.width,
         height: this.height,
-        iterations,
-        backgroundBrightness,
-        rectBrightnessMin,
-        rectBrightnessMax,
-        rectAlphaMin,
-        rectAlphaMax,
+        options,
       }
 
       this.rendererWorker.postMessage(msg)

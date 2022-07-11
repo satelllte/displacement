@@ -25,12 +25,7 @@ self.onmessage = (event) => {
     const {
       width,
       height,
-      iterations,
-      backgroundBrightness,
-      rectBrightnessMin,
-      rectBrightnessMax,
-      rectAlphaMin,
-      rectAlphaMax,
+      options,
     } = event.data
 
     if (!offscreenCanvas) {
@@ -47,12 +42,7 @@ self.onmessage = (event) => {
       ctx,
       width,
       height,
-      iterations,
-      backgroundBrightness,
-      rectBrightnessMin,
-      rectBrightnessMax,
-      rectAlphaMin,
-      rectAlphaMax,
+      options,
       onCompleted,
     )
   }

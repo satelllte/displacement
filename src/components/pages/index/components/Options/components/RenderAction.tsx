@@ -10,6 +10,7 @@ import {
 } from '@/state'
 import { RendererContext } from '@/context/RendererContext'
 import { Button } from '@/components/ui/Button'
+import { RenderOptions } from '@/graphics/types'
 
 export const RenderAction = () => {
   const renderer = React.useContext(RendererContext)
@@ -36,13 +37,17 @@ export const RenderAction = () => {
     const rectAlphaMin = await snapshot.getPromise(rectAlphaMinState)
     const rectAlphaMax = await snapshot.getPromise(rectAlphaMaxState)
 
-    renderer.startRender(
+    const options: RenderOptions = {
       iterations,
       backgroundBrightness,
       rectBrightnessMin,
       rectBrightnessMax,
       rectAlphaMin,
       rectAlphaMax,
+    }
+
+    renderer.startRender(
+      options,
       onRenderComplete,
     )
   }, [renderer, onRenderComplete])
