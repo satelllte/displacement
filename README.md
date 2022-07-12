@@ -72,3 +72,7 @@ Lint check:
 ```bash
 npm run test:lint
 ```
+
+## Contributing
+
+See [Contributing Guide](./CONTRIBUTING.md).
