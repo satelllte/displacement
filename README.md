@@ -76,3 +76,7 @@ npm run test:lint
 ## Contributing
 
 See [Contributing Guide](./CONTRIBUTING.md).
+
+## Code of Conduct
+
+See [Code of Conduct](./CODE_OF_CONDUCT.md).
