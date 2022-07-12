@@ -5,4 +5,10 @@ export const RECOIL_KEYS = {
   rectBrightnessMax: 'rectBrightnessMax',
   rectAlphaMin: 'rectAlphaMin',
   rectAlphaMax: 'rectAlphaMax',
+  matrixBrightnessMin: 'matrixBrightnessMin',
+  matrixBrightnessMax: 'matrixBrightnessMax',
+  matrixAlphaMin: 'matrixAlphaMin',
+  matrixAlphaMax: 'matrixAlphaMax',
+  matrixSizeMin: 'matrixSizeMin',
+  matrixSizeMax: 'matrixSizeMax',
 }

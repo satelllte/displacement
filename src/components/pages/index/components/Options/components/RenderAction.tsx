@@ -7,6 +7,12 @@ import {
   rectBrightnessMaxState,
   rectAlphaMinState,
   rectAlphaMaxState,
+  matrixBrightnessMinState,
+  matrixBrightnessMaxState,
+  matrixAlphaMinState,
+  matrixAlphaMaxState,
+  matrixSizeMinState,
+  matrixSizeMaxState,
 } from '@/state'
 import { RendererContext } from '@/context/RendererContext'
 import { Button } from '@/components/ui/Button'
@@ -36,6 +42,12 @@ export const RenderAction = () => {
     const rectBrightnessMax = await snapshot.getPromise(rectBrightnessMaxState)
     const rectAlphaMin = await snapshot.getPromise(rectAlphaMinState)
     const rectAlphaMax = await snapshot.getPromise(rectAlphaMaxState)
+    const matrixBrightnessMin = await snapshot.getPromise(matrixBrightnessMinState)
+    const matrixBrightnessMax = await snapshot.getPromise(matrixBrightnessMaxState)
+    const matrixAlphaMin = await snapshot.getPromise(matrixAlphaMinState)
+    const matrixAlphaMax = await snapshot.getPromise(matrixAlphaMaxState)
+    const matrixSizeMin = await snapshot.getPromise(matrixSizeMinState)
+    const matrixSizeMax = await snapshot.getPromise(matrixSizeMaxState)
 
     const options: RenderOptions = {
       iterations,
@@ -44,6 +56,12 @@ export const RenderAction = () => {
       rectBrightnessMax,
       rectAlphaMin,
       rectAlphaMax,
+      matrixBrightnessMin,
+      matrixBrightnessMax,
+      matrixAlphaMin,
+      matrixAlphaMax,
+      matrixSizeMin,
+      matrixSizeMax,
     }
 
     renderer.startRender(

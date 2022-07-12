@@ -6,6 +6,12 @@ import {
   rectBrightnessMaxState,
   rectAlphaMinState,
   rectAlphaMaxState,
+  matrixBrightnessMinState,
+  matrixBrightnessMaxState,
+  matrixAlphaMinState,
+  matrixAlphaMaxState,
+  matrixSizeMinState,
+  matrixSizeMaxState,
 } from '@/state'
 import { Option } from './components/Option'
 import { OptionDual } from './components/OptionDual'
@@ -32,7 +38,7 @@ export const Options = () => {
         />
         <OptionDual
           id='rectBrightness'
-          label='Rect:Background'
+          label='Rect:Brightness'
           min={0x00}
           max={0xFF}
           stateMin={rectBrightnessMinState}
@@ -45,6 +51,30 @@ export const Options = () => {
           max={0xFF}
           stateMin={rectAlphaMinState}
           stateMax={rectAlphaMaxState}
+        />
+        <OptionDual
+          id='matrixBrightness'
+          label='Matrix:Brightness'
+          min={0x00}
+          max={0xFF}
+          stateMin={matrixBrightnessMinState}
+          stateMax={matrixBrightnessMaxState}
+        />
+        <OptionDual
+          id='matrixAlpha'
+          label='Matrix:Alpha'
+          min={0x00}
+          max={0xFF}
+          stateMin={matrixAlphaMinState}
+          stateMax={matrixAlphaMaxState}
+        />
+        <OptionDual
+          id='matrixSize'
+          label='Matrix:Size'
+          min={2}
+          max={10}
+          stateMin={matrixSizeMinState}
+          stateMax={matrixSizeMaxState}
         />
       </div>
       <RenderAction/>
