@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest'
 import { randomBool, randomInt } from './random'
 
 describe('random', () => {
-  const retries = 10
+  const retries = 20
 
   describe('randomInt', () => {
     test.each([
@@ -23,11 +23,18 @@ describe('random', () => {
 
   describe('randomBool', () => {
     test('works', () => {
+      let wasTrue = false
+      let wasFalse = false
+      
       for (let i = 0; i < retries; i++) {
         const result = randomBool()
         expect(result).toBeTypeOf('boolean')
-        expect(result === true || result === false).toBeTruthy()
+        if (!wasTrue && result === true) wasTrue = true
+        if (!wasFalse && result === false) wasFalse = true
       }
+
+      expect(wasTrue).toEqual(true)
+      expect(wasFalse).toEqual(true)
     })
   })
 })
