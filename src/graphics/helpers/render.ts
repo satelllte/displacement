@@ -1,3 +1,4 @@
+import { percentage } from "@/utils/percentage"
 import { randomBool, randomInt } from "@/utils/random"
 import type { RenderOptions } from "../types"
 
@@ -21,6 +22,7 @@ export const render = (
     matrixColsMax,
     matrixRowsMin,
     matrixRowsMax,
+    matrixSpacingPercent,
   }: RenderOptions,
   onComplete: () => void,
 ) => {
@@ -57,7 +59,7 @@ export const render = (
         const alpha = randomInt(matrixAlphaMin, matrixAlphaMax) / 0xFF
         const cols = randomInt(matrixColsMin, matrixColsMax)
         const rows = randomInt(matrixRowsMin, matrixRowsMax)
-        const spacing = Math.round(width / 128) // hardcoded for now
+        const spacing = Math.round(percentage(matrixSpacingPercent, Math.min(width, height)))
         const tileSize = Math.round(width / 64) // hardcoded for now
         const matrixWidth = cols * tileSize + spacing * (cols - 1)
         const matrixHeight = rows * tileSize + spacing * (rows - 1)

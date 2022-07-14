@@ -13,4 +13,5 @@ export const RECOIL_KEYS = {
   matrixColsMax: 'matrixColsMax',
   matrixRowsMin: 'matrixRowsMin',
   matrixRowsMax: 'matrixRowsMax',
+  matrixSpacingPercent: 'matrixSpacingPercent',
 }

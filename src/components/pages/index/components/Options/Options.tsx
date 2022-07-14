@@ -14,6 +14,7 @@ import {
   matrixColsMaxState,
   matrixRowsMinState,
   matrixRowsMaxState,
+  matrixSpacingPercentState,
 } from '@/state'
 import { Option } from './components/Option'
 import { OptionDual } from './components/OptionDual'
@@ -85,6 +86,14 @@ export const Options = () => {
           max={10}
           stateMin={matrixRowsMinState}
           stateMax={matrixRowsMaxState}
+        />
+        <Option
+          id='matrixSpacingPercent'
+          label='Matrix:Spacing (%)'
+          min={0.01}
+          max={5.00}
+          step={0.01}
+          state={matrixSpacingPercentState}
         />
       </div>
       <RenderAction/>

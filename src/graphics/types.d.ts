@@ -14,4 +14,5 @@ export interface RenderOptions {
   matrixColsMax: number
   matrixRowsMin: number
   matrixRowsMax: number
+  matrixSpacingPercent: number
 }

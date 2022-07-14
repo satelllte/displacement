@@ -70,3 +70,8 @@ export const matrixRowsMaxState = atom<number>({
   key: RECOIL_KEYS.matrixRowsMax,
   default: 5,
 })
+
+export const matrixSpacingPercentState = atom<number>({
+  key: RECOIL_KEYS.matrixSpacingPercent,
+  default: 0.25,
+})
