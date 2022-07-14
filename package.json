@@ -6,7 +6,7 @@
     "serve": "serve out",
     "build": "next build && next export",
     "test:units": "vitest run --threads",
-    "test:typescript": "tsc --noEmit",
+    "test:types": "tsc --noEmit",
     "test:lint": "next lint"
   },
   "dependencies": {

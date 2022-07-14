@@ -30,7 +30,7 @@ jobs:
     - name: Unit tests
       run: npm run test:units
     - name: Validate types
-      run: npm run test:typescript
+      run: npm run test:types
     - name: Code linting
       run: npm run test:lint
     - name: Build application
