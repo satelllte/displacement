@@ -10,8 +10,10 @@ import {
   matrixBrightnessMaxState,
   matrixAlphaMinState,
   matrixAlphaMaxState,
-  matrixSizeMinState,
-  matrixSizeMaxState,
+  matrixColsMinState,
+  matrixColsMaxState,
+  matrixRowsMinState,
+  matrixRowsMaxState,
 } from '@/state'
 import { Option } from './components/Option'
 import { OptionDual } from './components/OptionDual'
@@ -69,12 +71,20 @@ export const Options = () => {
           stateMax={matrixAlphaMaxState}
         />
         <OptionDual
-          id='matrixSize'
-          label='Matrix:Size'
+          id='matrixCols'
+          label='Matrix:Cols'
           min={2}
           max={10}
-          stateMin={matrixSizeMinState}
-          stateMax={matrixSizeMaxState}
+          stateMin={matrixColsMinState}
+          stateMax={matrixColsMaxState}
+        />
+        <OptionDual
+          id='matrixRows'
+          label='Matrix:Rows'
+          min={2}
+          max={10}
+          stateMin={matrixRowsMinState}
+          stateMax={matrixRowsMaxState}
         />
       </div>
       <RenderAction/>

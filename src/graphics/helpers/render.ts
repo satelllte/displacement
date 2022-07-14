@@ -17,8 +17,10 @@ export const render = (
     matrixBrightnessMax,
     matrixAlphaMin,
     matrixAlphaMax,
-    matrixSizeMin,
-    matrixSizeMax,
+    matrixColsMin,
+    matrixColsMax,
+    matrixRowsMin,
+    matrixRowsMax,
   }: RenderOptions,
   onComplete: () => void,
 ) => {
@@ -53,18 +55,19 @@ export const render = (
         // matrix
         const brightness = randomInt(matrixBrightnessMin, matrixBrightnessMax)
         const alpha = randomInt(matrixAlphaMin, matrixAlphaMax) / 0xFF
-        const size = randomInt(matrixSizeMin, matrixSizeMax)
+        const cols = randomInt(matrixColsMin, matrixColsMax)
+        const rows = randomInt(matrixRowsMin, matrixRowsMax)
         const spacing = Math.round(width / 128) // hardcoded for now
         const tileSize = Math.round(width / 64) // hardcoded for now
-        const matrixWidth = size * tileSize + spacing * (size - 1)
-        const matrixHeight = size * tileSize + spacing * (size - 1)
+        const matrixWidth = cols * tileSize + spacing * (cols - 1)
+        const matrixHeight = rows * tileSize + spacing * (rows - 1)
         const x0 = randomInt(0, width - matrixWidth - 1)
         const y0 = randomInt(0, height - matrixHeight - 1)
         ctx.fillStyle = `rgba(${brightness}, ${brightness}, ${brightness}, ${alpha})`
         let x = x0
         let y = y0
-        for (let i = 0; i < size; i++) {
-          for (let j = 0; j < size; j++) {
+        for (let i = 0; i < cols; i++) {
+          for (let j = 0; j < rows; j++) {
             ctx.fillRect(x, y, tileSize, tileSize)
             y += tileSize + spacing
           }

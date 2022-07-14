@@ -9,6 +9,8 @@ export const RECOIL_KEYS = {
   matrixBrightnessMax: 'matrixBrightnessMax',
   matrixAlphaMin: 'matrixAlphaMin',
   matrixAlphaMax: 'matrixAlphaMax',
-  matrixSizeMin: 'matrixSizeMin',
-  matrixSizeMax: 'matrixSizeMax',
+  matrixColsMin: 'matrixColsMin',
+  matrixColsMax: 'matrixColsMax',
+  matrixRowsMin: 'matrixRowsMin',
+  matrixRowsMax: 'matrixRowsMax',
 }

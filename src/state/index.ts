@@ -51,12 +51,22 @@ export const matrixAlphaMaxState = atom<number>({
   default: 0xC0,
 })
 
-export const matrixSizeMinState = atom<number>({
-  key: RECOIL_KEYS.matrixSizeMin,
+export const matrixColsMinState = atom<number>({
+  key: RECOIL_KEYS.matrixColsMin,
   default: 3,
 })
 
-export const matrixSizeMaxState = atom<number>({
-  key: RECOIL_KEYS.matrixSizeMax,
+export const matrixColsMaxState = atom<number>({
+  key: RECOIL_KEYS.matrixColsMax,
+  default: 5,
+})
+
+export const matrixRowsMinState = atom<number>({
+  key: RECOIL_KEYS.matrixRowsMin,
+  default: 3,
+})
+
+export const matrixRowsMaxState = atom<number>({
+  key: RECOIL_KEYS.matrixRowsMax,
   default: 5,
 })

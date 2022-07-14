@@ -10,6 +10,8 @@ export interface RenderOptions {
   matrixBrightnessMax: number
   matrixAlphaMin: number
   matrixAlphaMax: number
-  matrixSizeMin: number
-  matrixSizeMax: number
+  matrixColsMin: number
+  matrixColsMax: number
+  matrixRowsMin: number
+  matrixRowsMax: number
 }
