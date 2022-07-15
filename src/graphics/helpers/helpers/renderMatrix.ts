@@ -2,8 +2,6 @@ import { randomInt } from '@/utils/random'
 
 export const renderMatrix = (
   ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
-  width: number,
-  height: number,
   spacing: number,
   tileSize: number,
   brightnessMin: number,
@@ -22,11 +20,11 @@ export const renderMatrix = (
 
   const cols = randomInt(colsMin, colsMax)
   const rows = randomInt(rowsMin, rowsMax)
-  const matrixWidth = cols * tileSize + spacing * (cols - 1)
-  const matrixHeight = rows * tileSize + spacing * (rows - 1)
+  const width = cols * tileSize + spacing * (cols - 1)
+  const height = rows * tileSize + spacing * (rows - 1)
 
-  const x0 = randomInt(0, width - matrixWidth - 1)
-  const y0 = randomInt(0, height - matrixHeight - 1)
+  const x0 = randomInt(0, ctx.canvas.width - width - 1)
+  const y0 = randomInt(0, ctx.canvas.height - height - 1)
 
   let x = x0
   let y = y0

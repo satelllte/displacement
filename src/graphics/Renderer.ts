@@ -11,8 +11,6 @@ import {
 export class Renderer {
   private ready: boolean = false
   private canvas: HTMLCanvasElement
-  private width: number
-  private height: number
   private offscreenSupported: boolean
   private ctx?: CanvasRenderingContext2D
   private offscreenCanvas?: OffscreenCanvas
@@ -20,13 +18,9 @@ export class Renderer {
 
   constructor(
     canvas: HTMLCanvasElement,
-    width: number,
-    height: number,
     onReady: (renderer: Renderer) => void,
   ) {
     this.canvas = canvas
-    this.width = width
-    this.height = height
     this.offscreenSupported = OffscreenCanvasFeature.isSupported()
 
     this.init(onReady)
@@ -69,13 +63,7 @@ export class Renderer {
       if (!this.ctx) {
         throw new Error('Context wasn\'t not set')
       }
-      render(
-        this.ctx,
-        this.width,
-        this.height,
-        options,
-        onComplete,
-      )
+      render(this.ctx, options, onComplete)
     } else {
       if (!this.offscreenCanvas) {
         throw new Error('OffscreenCanvas wasn\'t set')
@@ -86,8 +74,6 @@ export class Renderer {
 
       const msg: RendererWorkerRenderMessage = {
         type: RendererWorkerMessageType.render,
-        width: this.width,
-        height: this.height,
         options,
       }
 
