@@ -22,11 +22,7 @@ self.onmessage = (event) => {
   }
 
   if (event.data.type === RendererWorkerMessageType.render) {
-    const {
-      width,
-      height,
-      options,
-    } = event.data
+    const { options } = event.data
 
     if (!offscreenCanvas) {
       throw new Error('offscreenCanvas wasn\'t initialized')
@@ -38,12 +34,6 @@ self.onmessage = (event) => {
       throw new Error('Cannot get 2d context of the offscreen canvas')
     }
 
-    render(
-      ctx,
-      width,
-      height,
-      options,
-      onCompleted,
-    )
+    render(ctx, options, onCompleted)
   }
 }

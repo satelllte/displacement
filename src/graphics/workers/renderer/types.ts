@@ -13,8 +13,6 @@ export type RendererWorkerInitializeMessage = {
 
 export type RendererWorkerRenderMessage = {
   type: RendererWorkerMessageType.render
-  width: number,
-  height: number,
   options: RenderOptions,
 }
 

@@ -5,8 +5,6 @@ import { renderMatrix, renderRect } from './helpers'
 
 export const render = (
   ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
-  width: number,
-  height: number,
   {
     iterations,
     iterationsPerFrame = 50,
@@ -28,6 +26,8 @@ export const render = (
   }: RenderOptions,
   onComplete: () => void,
 ) => {
+  const { width, height } = ctx.canvas
+
   ctx.fillStyle = `rgb(${backgroundBrightness}, ${backgroundBrightness}, ${backgroundBrightness})`
   ctx.fillRect(0, 0, width, height)
 
@@ -48,8 +48,6 @@ export const render = (
       if (randomBool()) {
         renderRect(
           ctx,
-          width,
-          height,
           rectMinWidth,
           rectMaxWidth,
           rectMinHeight,
@@ -62,8 +60,6 @@ export const render = (
       } else {
         renderMatrix(
           ctx,
-          width,
-          height,
           matrixSpacing,
           matrixTileSize,
           matrixBrightnessMin,
