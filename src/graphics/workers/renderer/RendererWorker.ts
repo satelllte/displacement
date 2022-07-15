@@ -1,8 +1,8 @@
+import { render } from '../../helpers'
 import { RendererWorkerMessageType, RendererWorkerRenderCompletedMessage } from './types'
 import type {
   RendererWorkerMessage
 } from './types'
-import { render } from '../../helpers/render'
 
 declare const self: IDedicatedWorkerGlobalScope<RendererWorkerMessage>
 
