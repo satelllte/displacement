@@ -2,10 +2,10 @@ import { randomInt } from '@/utils/random'
 
 export const renderRect = (
   ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
-  minWidth: number,
-  maxWidth: number,
-  minHeight: number,
-  maxHeight: number,
+  widthMin: number,
+  widthMax: number,
+  heightMin: number,
+  heightMax: number,
   brightnessMin: number,
   brightnessMax: number,
   alphaMin: number,
@@ -16,8 +16,8 @@ export const renderRect = (
 
   ctx.fillStyle = `rgba(${brightness}, ${brightness}, ${brightness}, ${alpha})`
 
-  const width = randomInt(minWidth, maxWidth)
-  const height = randomInt(minHeight, maxHeight)
+  const width = randomInt(widthMin, widthMax)
+  const height = randomInt(heightMin, heightMax)
 
   ctx.fillRect(
     randomInt(0, ctx.canvas.width - width - 1),

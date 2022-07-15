@@ -33,10 +33,10 @@ export const render = (
 
   let iteration = 0
 
-  const rectMinWidth = Math.round(width / 24)
-  const rectMaxWidth = Math.round(width / 8)
-  const rectMinHeight = Math.round(height / 24)
-  const rectMaxHeight = Math.round(height / 8)
+  const rectWidthMin = Math.round(width / 24)
+  const rectWidthMax = Math.round(width / 8)
+  const rectHeightMin = Math.round(height / 24)
+  const rectHeightMax = Math.round(height / 8)
 
   const matrixSpacing = Math.round(percentage(matrixSpacingPercent, Math.min(width, height)))
   const matrixTileSize = Math.round(percentage(matrixTileSizePercent, Math.min(width, height)))
@@ -48,10 +48,10 @@ export const render = (
       if (randomBool()) {
         renderRect(
           ctx,
-          rectMinWidth,
-          rectMaxWidth,
-          rectMinHeight,
-          rectMaxHeight,
+          rectWidthMin,
+          rectWidthMax,
+          rectHeightMin,
+          rectHeightMax,
           rectBrightnessMin,
           rectBrightnessMax,
           rectAlphaMin,
