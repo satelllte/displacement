@@ -8,16 +8,19 @@ export const renderRect = (
   rectMaxWidth: number,
   rectMinHeight: number,
   rectMaxHeight: number,
-  rectBrightnessMin: number,
-  rectBrightnessMax: number,
-  rectAlphaMin: number,
-  rectAlphaMax: number,
+  brightnessMin: number,
+  brightnessMax: number,
+  alphaMin: number,
+  alphaMax: number,
 ) => {
-  const brightness = randomInt(rectBrightnessMin, rectBrightnessMax)
-  const alpha = randomInt(rectAlphaMin, rectAlphaMax) / 0xFF
+  const brightness = randomInt(brightnessMin, brightnessMax)
+  const alpha = randomInt(alphaMin, alphaMax) / 0xFF
+
+  ctx.fillStyle = `rgba(${brightness}, ${brightness}, ${brightness}, ${alpha})`
+
   const rectWidth = randomInt(rectMinWidth, rectMaxWidth)
   const rectHeight = randomInt(rectMinHeight, rectMaxHeight)
-  ctx.fillStyle = `rgba(${brightness}, ${brightness}, ${brightness}, ${alpha})`
+
   ctx.fillRect(
     randomInt(0, width - rectWidth - 1),
     randomInt(0, height - rectHeight - 1),
