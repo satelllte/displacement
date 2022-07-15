@@ -4,26 +4,26 @@ export const renderMatrix = (
   ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
   width: number,
   height: number,
-  matrixSpacing: number,
-  matrixTileSize: number,
-  matrixBrightnessMin: number,
-  matrixBrightnessMax: number,
-  matrixAlphaMin: number,
-  matrixAlphaMax: number,
-  matrixColsMin: number,
-  matrixColsMax: number,
-  matrixRowsMin: number,
-  matrixRowsMax: number,
+  spacing: number,
+  tileSize: number,
+  brightnessMin: number,
+  brightnessMax: number,
+  alphaMin: number,
+  alphaMax: number,
+  colsMin: number,
+  colsMax: number,
+  rowsMin: number,
+  rowsMax: number,
 ) => {
-  const brightness = randomInt(matrixBrightnessMin, matrixBrightnessMax)
-  const alpha = randomInt(matrixAlphaMin, matrixAlphaMax) / 0xFF
+  const brightness = randomInt(brightnessMin, brightnessMax)
+  const alpha = randomInt(alphaMin, alphaMax) / 0xFF
 
   ctx.fillStyle = `rgba(${brightness}, ${brightness}, ${brightness}, ${alpha})`
 
-  const cols = randomInt(matrixColsMin, matrixColsMax)
-  const rows = randomInt(matrixRowsMin, matrixRowsMax)
-  const matrixWidth = cols * matrixTileSize + matrixSpacing * (cols - 1)
-  const matrixHeight = rows * matrixTileSize + matrixSpacing * (rows - 1)
+  const cols = randomInt(colsMin, colsMax)
+  const rows = randomInt(rowsMin, rowsMax)
+  const matrixWidth = cols * tileSize + spacing * (cols - 1)
+  const matrixHeight = rows * tileSize + spacing * (rows - 1)
 
   const x0 = randomInt(0, width - matrixWidth - 1)
   const y0 = randomInt(0, height - matrixHeight - 1)
@@ -33,10 +33,10 @@ export const renderMatrix = (
 
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
-      ctx.fillRect(x, y, matrixTileSize, matrixTileSize)
-      y += matrixTileSize + matrixSpacing
+      ctx.fillRect(x, y, tileSize, tileSize)
+      y += tileSize + spacing
     }
-    x += matrixTileSize + matrixSpacing
+    x += tileSize + spacing
     y = y0
   }
 }
