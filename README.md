@@ -64,7 +64,7 @@ npm run test:units
 Types check:
 
 ```bash
-npm run test:typescript
+npm run test:types
 ```
 
 Lint check:

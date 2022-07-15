@@ -8,6 +8,7 @@ interface OptionProps {
   label: string
   min: number
   max: number
+  step?: number
   state: RecoilState<number>
 }
 
@@ -16,6 +17,7 @@ export const Option: React.FC<OptionProps> = ({
   label,
   min,
   max,
+  step = 1,
   state,
 }) => {
   const [value, setValue] = useRecoilState(state)
@@ -27,6 +29,7 @@ export const Option: React.FC<OptionProps> = ({
         id={id}
         min={min}
         max={max}
+        step={step}
         value={value}
         onValueChange={setValue}
       />

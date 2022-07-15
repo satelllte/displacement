@@ -6,6 +6,16 @@ import {
   rectBrightnessMaxState,
   rectAlphaMinState,
   rectAlphaMaxState,
+  matrixBrightnessMinState,
+  matrixBrightnessMaxState,
+  matrixAlphaMinState,
+  matrixAlphaMaxState,
+  matrixColsMinState,
+  matrixColsMaxState,
+  matrixRowsMinState,
+  matrixRowsMaxState,
+  matrixSpacingPercentState,
+  matrixTileSizePercentState,
 } from '@/state'
 import { Option } from './components/Option'
 import { OptionDual } from './components/OptionDual'
@@ -32,7 +42,7 @@ export const Options = () => {
         />
         <OptionDual
           id='rectBrightness'
-          label='Rect:Background'
+          label='Rect:Brightness'
           min={0x00}
           max={0xFF}
           stateMin={rectBrightnessMinState}
@@ -45,6 +55,54 @@ export const Options = () => {
           max={0xFF}
           stateMin={rectAlphaMinState}
           stateMax={rectAlphaMaxState}
+        />
+        <OptionDual
+          id='matrixBrightness'
+          label='Matrix:Brightness'
+          min={0x00}
+          max={0xFF}
+          stateMin={matrixBrightnessMinState}
+          stateMax={matrixBrightnessMaxState}
+        />
+        <OptionDual
+          id='matrixAlpha'
+          label='Matrix:Alpha'
+          min={0x00}
+          max={0xFF}
+          stateMin={matrixAlphaMinState}
+          stateMax={matrixAlphaMaxState}
+        />
+        <OptionDual
+          id='matrixCols'
+          label='Matrix:Cols'
+          min={2}
+          max={10}
+          stateMin={matrixColsMinState}
+          stateMax={matrixColsMaxState}
+        />
+        <OptionDual
+          id='matrixRows'
+          label='Matrix:Rows'
+          min={2}
+          max={10}
+          stateMin={matrixRowsMinState}
+          stateMax={matrixRowsMaxState}
+        />
+        <Option
+          id='matrixSpacingPercent'
+          label='Matrix:Spacing (%)'
+          min={0.01}
+          max={5.00}
+          step={0.01}
+          state={matrixSpacingPercentState}
+        />
+        <Option
+          id='matrixTileSizePercent'
+          label='Matrix:TileSize (%)'
+          min={0.5}
+          max={5.0}
+          step={0.01}
+          state={matrixTileSizePercentState}
         />
       </div>
       <RenderAction/>

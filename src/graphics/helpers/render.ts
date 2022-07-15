@@ -1,5 +1,7 @@
-import { randomInt } from "@/utils/random"
-import type { RenderOptions } from "../types"
+import { percentage } from '@/utils/percentage'
+import { randomBool } from '@/utils/random'
+import type { RenderOptions } from '../types'
+import { renderMatrix, renderRect } from './helpers'
 
 export const render = (
   ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
@@ -13,6 +15,16 @@ export const render = (
     rectBrightnessMax,
     rectAlphaMin,
     rectAlphaMax,
+    matrixBrightnessMin,
+    matrixBrightnessMax,
+    matrixAlphaMin,
+    matrixAlphaMax,
+    matrixColsMin,
+    matrixColsMax,
+    matrixRowsMin,
+    matrixRowsMax,
+    matrixSpacingPercent,
+    matrixTileSizePercent,
   }: RenderOptions,
   onComplete: () => void,
 ) => {
@@ -21,26 +33,49 @@ export const render = (
 
   let iteration = 0
 
-  const minRectWidth = Math.round(width / 24)
-  const maxRectWidth = Math.round(width / 8)
-  const minRectHeight = Math.round(height / 24)
-  const maxRectHeight = Math.round(height / 8)
+  const rectMinWidth = Math.round(width / 24)
+  const rectMaxWidth = Math.round(width / 8)
+  const rectMinHeight = Math.round(height / 24)
+  const rectMaxHeight = Math.round(height / 8)
+
+  const matrixSpacing = Math.round(percentage(matrixSpacingPercent, Math.min(width, height)))
+  const matrixTileSize = Math.round(percentage(matrixTileSizePercent, Math.min(width, height)))
 
   const draw = () => {
     const last = Math.min(iteration + iterationsPerFrame, iterations)
     
     while (iteration < last) {
-      const brightness = randomInt(rectBrightnessMin, rectBrightnessMax)
-      const alpha = randomInt(rectAlphaMin, rectAlphaMax) / 0xFF
-      const rectWidth = randomInt(minRectWidth, maxRectWidth)
-      const rectHeight = randomInt(minRectHeight, maxRectHeight)
-      ctx.fillStyle = `rgba(${brightness}, ${brightness}, ${brightness}, ${alpha})`
-      ctx.fillRect(
-        randomInt(0, width - rectWidth - 1),
-        randomInt(0, height - rectHeight - 1),
-        rectWidth,
-        rectHeight,
-      )
+      if (randomBool()) {
+        renderRect(
+          ctx,
+          width,
+          height,
+          rectMinWidth,
+          rectMaxWidth,
+          rectMinHeight,
+          rectMaxHeight,
+          rectBrightnessMin,
+          rectBrightnessMax,
+          rectAlphaMin,
+          rectAlphaMax,
+        )
+      } else {
+        renderMatrix(
+          ctx,
+          width,
+          height,
+          matrixSpacing,
+          matrixTileSize,
+          matrixBrightnessMin,
+          matrixBrightnessMax,
+          matrixAlphaMin,
+          matrixAlphaMax,
+          matrixColsMin,
+          matrixColsMax,
+          matrixRowsMin,
+          matrixRowsMax,
+        )
+      }
       iteration++
     }
     
