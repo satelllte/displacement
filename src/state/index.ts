@@ -75,3 +75,8 @@ export const matrixSpacingPercentState = atom<number>({
   key: RECOIL_KEYS.matrixSpacingPercent,
   default: 0.25,
 })
+
+export const matrixTileSizePercentState = atom<number>({
+  key: RECOIL_KEYS.matrixTileSizePercent,
+  default: 1.25,
+})

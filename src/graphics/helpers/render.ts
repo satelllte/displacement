@@ -23,6 +23,7 @@ export const render = (
     matrixRowsMin,
     matrixRowsMax,
     matrixSpacingPercent,
+    matrixTileSizePercent,
   }: RenderOptions,
   onComplete: () => void,
 ) => {
@@ -60,7 +61,7 @@ export const render = (
         const cols = randomInt(matrixColsMin, matrixColsMax)
         const rows = randomInt(matrixRowsMin, matrixRowsMax)
         const spacing = Math.round(percentage(matrixSpacingPercent, Math.min(width, height)))
-        const tileSize = Math.round(width / 64) // hardcoded for now
+        const tileSize = Math.round(percentage(matrixTileSizePercent, Math.min(width, height)))
         const matrixWidth = cols * tileSize + spacing * (cols - 1)
         const matrixHeight = rows * tileSize + spacing * (rows - 1)
         const x0 = randomInt(0, width - matrixWidth - 1)

@@ -16,6 +16,7 @@ import {
   matrixRowsMinState,
   matrixRowsMaxState,
   matrixSpacingPercentState,
+  matrixTileSizePercentState,
 } from '@/state'
 import { RendererContext } from '@/context/RendererContext'
 import { Button } from '@/components/ui/Button'
@@ -54,6 +55,7 @@ export const RenderAction = () => {
     const matrixRowsMin = await snapshot.getPromise(matrixRowsMinState)
     const matrixRowsMax = await snapshot.getPromise(matrixRowsMaxState)
     const matrixSpacingPercent = await snapshot.getPromise(matrixSpacingPercentState)
+    const matrixTileSizePercent = await snapshot.getPromise(matrixTileSizePercentState)
 
     const options: RenderOptions = {
       iterations,
@@ -71,6 +73,7 @@ export const RenderAction = () => {
       matrixRowsMin,
       matrixRowsMax,
       matrixSpacingPercent,
+      matrixTileSizePercent,
     }
 
     renderer.startRender(
