@@ -6,6 +6,10 @@ export interface RenderOptions {
   rectBrightnessMax: number
   rectAlphaMin: number
   rectAlphaMax: number
+  rectWidthPercentMin: number
+  rectWidthPercentMax: number
+  rectHeightPercentMin: number
+  rectHeightPercentMax: number
   matrixBrightnessMin: number
   matrixBrightnessMax: number
   matrixAlphaMin: number
