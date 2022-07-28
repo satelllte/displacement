@@ -1,6 +1,6 @@
 {
   "name": "netlify",
   "devDependencies": {
-    "netlify-cli": "10.11.2"
+    "netlify-cli": "10.12.1"
   }
 }
