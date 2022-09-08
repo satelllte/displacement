@@ -17,7 +17,7 @@
     "recoil": "0.7.5"
   },
   "devDependencies": {
-    "@types/node": "18.7.13",
+    "@types/node": "18.7.16",
     "@types/offscreencanvas": "2019.7.0",
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
