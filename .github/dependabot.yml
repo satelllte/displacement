@@ -8,17 +8,14 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/" # default location of `.github/workflows`
     schedule:
-      interval: "weekly"
-      day: "thursday"
+      interval: "monthly"
 
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "thursday"
+      interval: "monthly"
   
   - package-ecosystem: "npm"
     directory: "/netlify/"
     schedule:
-      interval: "weekly"
-      day: "thursday"
+      interval: "monthly"
