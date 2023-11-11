@@ -1,3 +1,7 @@
+▶▶▶ Moved into [satelllte/displacementx](https://github.com/satelllte/displacementx)
+
+--------------------------------
+
 # DISPLACEMENT
 
 Displacement maps generator.
