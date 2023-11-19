@@ -19,7 +19,7 @@ jobs:
     env:
       NEXT_CI_BUILD: true
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
@@ -51,7 +51,7 @@ jobs:
       NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
@@ -77,7 +77,7 @@ jobs:
     needs: [deploy]  
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - run: mkdir ./lighthouse-artifacts
     - name: Lighthouse (Development)
       if: ${{ env.BUILD_DEVELOPMENT == 'true' }}
